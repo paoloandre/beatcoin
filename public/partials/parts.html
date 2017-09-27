@@ -1,0 +1,31 @@
+<div class="col-md-12">
+<h1>Parti</h1>
+<table class="table table-striped">
+  <thead>
+    <th>Nome</th>
+    <th>Azione</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="part in parts">
+      <td ng-hide="part.edit">{[{part.nome}]}</td>
+      <td ng-show="part.edit"><input type="text" ng-model="part.nome"></td>
+
+      <td ng-hide="part.edit">
+        <button class="btn btn-success" ng-click="viewDetail($index)">Vedi</button>
+        <button class="btn btn-success" ng-click="toggleEdit($index)">Modifica</button>
+        <button class="btn btn-danger" ng-click="deletePart($index)">Elimina</button>
+      </td>
+      <td ng-show="part.edit">
+        <button class="btn btn-primary" ng-click="savePart($index)">Salva</button>
+        <button class="btn btn-danger" ng-click="toggleEdit($index)">Annulla</button>
+      </td>
+    </tr>
+  </tbody>
+  <tr>
+    <td><input type="text" ng-model="newPart.nome"></td>
+    <td>
+      <button class="btn btn-primary" ng-click="addPart()">Aggiungi nuovo</button>
+    </td>
+  </tr>
+</table>
+</div>

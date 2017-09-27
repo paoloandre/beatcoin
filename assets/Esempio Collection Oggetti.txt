@@ -1,0 +1,84 @@
+[{
+    id: jhgwuge,
+    nome: 'Lampada Supersonica',
+    descrizione: 'lorem ipsum',
+    prezzoBase: 25,
+    parti: [{
+        nome: 'diffusore luce',
+        opzioni: [{
+            nome: 'diffusore blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'diffusore bianco',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    },{
+        nome: 'base',
+        opzioni: [{
+            nome: 'base blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'base bianca',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    }]
+
+},{
+    nome: 'Lampada ultrasonica',
+    descrizione: 'lorem ipsum',
+    prezzoBase: 25,
+    parti: [{
+        nome: 'diffusore luce',
+        opzioni: [{
+            nome: 'diffusore blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'diffusore bianco',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    },{
+        nome: 'base',
+        opzioni: [{
+            nome: 'base blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'base bianca',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    }]
+},{
+    nome: 'ometto lego',
+    descrizione: 'lorem ipsum',
+    prezzoBase: 25,
+    parti: [{
+        nome: 'gambe',
+        opzioni: [{
+            nome: 'diffusore blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'diffusore bianco',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    },{
+        nome: 'braccia',
+        opzioni: [{
+            nome: 'base blu',
+            prezzo: 55,
+            forma: 'http://endpointforma'
+        },{
+            nome: 'base bianca',
+            prezzo: 45,
+            forma: 'http://endpointforma'
+        }]
+    }]
+}]

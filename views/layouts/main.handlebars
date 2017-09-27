@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="productEditor" lang="en" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Product Editor</title>
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap.css" charset="utf-8">
+    <link rel="stylesheet" href="/static/stylesheets/bootstrap-theme.css" charset="utf-8">
+    <link rel="stylesheet" href="/static/stylesheets/angular-spinkit.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/static/stylesheets/sk-folding-cube.css" charset="utf-8">
+    <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+    <link href="/static/stylesheets/angular-toastr.css" rel="stylesheet">
+    <link href="/static/stylesheets/styles.css" rel="stylesheet">
+  </head>
+
+<body>
+  <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="/#/"><i class="ion-ios7-pulse-strong"></i> Unicam Product Editor</a>
+  </div>
+  <ul class="nav navbar-nav">
+    <li><a href="/#/">Home</a></li>
+    <li ng-if="isAuthenticated()"><a href="/#/profile">Profilo</a></li>
+  </ul>
+  <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
+    <li><a href="/#/login">Accedi</a></li>
+    <li><a href="/#/signup">Registrati</a></li>
+  </ul>
+  <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+    <li><a href="/#/logout">Logout</a></li>
+  </ul>
+</div>
+
+<div ui-view></div>
+
+    <!-- external scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/static/vendor/angular.js"></script>
+    <script src="/static/vendor/angular-toastr.js"></script>
+    <script src="/static/vendor/angular-toastr.tpls.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+    <script src="/static/vendor/angular-animate.js"></script>
+    <script src="/static/vendor/angular-messages.js"></script>
+    <script src="/static/vendor/angular-resource.js"></script>
+    <script src="/static/vendor/angular-sanitize.js"></script>
+    <script src="/static/vendor/angular-ui-router.js"></script>
+    <script src="/static/vendor/satellizer.js"></script>
+
+    <!-- application scripts-->
+    <script src="/static/js/angular-spinkit.min.js"></script>
+    <script src="/static/app.js"></script>
+    <script src="/static/directives/passwordStrength.js"></script>
+    <script src="/static/directives/passwordMatch.js"></script>
+    <script src="/static/directives/routerLoadingIndicator.js"></script>
+    <script src="/static/controllers/home.js"></script>
+    <script src="/static/controllers/login.js"></script>
+    <script src="/static/controllers/signup.js"></script>
+    <script src="/static/controllers/logout.js"></script>
+    <script src="/static/controllers/profile.js"></script>
+    <script src="/static/controllers/navbar.js"></script>
+    <script src="/static/controllers/getshapes.js"></script>
+    <script src="/static/controllers/lists.js"></script>
+    <script src="/static/controllers/objects.js"></script>
+    <script src="/static/controllers/parts.js"></script>
+    <script src="/static/controllers/options.js"></script>
+    <script src="/static/services/account.js"></script>
+    <script src="/static/controllers/upload.js"></script>
+  </body>
+</html>

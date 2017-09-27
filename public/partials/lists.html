@@ -1,0 +1,31 @@
+  <div class="col-md-12">
+  <h1>Liste</h1>
+  <table class="table table-striped">
+    <thead>
+      <th>Nome</th>
+      <th>Azione</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="list in lists">
+        <td ng-hide="list.edit">{[{list.nome}]}</td>
+        <td ng-show="list.edit"><input type="text" ng-model="list.nome"></td>
+
+        <td ng-hide="list.edit">
+          <button class="btn btn-success" ng-click="viewDetail($index)">Vedi</button>
+          <button class="btn btn-success" ng-click="toggleEdit($index)">Modifica</button>
+          <button class="btn btn-danger" ng-click="deleteList($index)">Elimina</button>
+        </td>
+        <td ng-show="list.edit">
+          <button class="btn btn-primary" ng-click="saveList($index)">Salva</button>
+          <button class="btn btn-danger" ng-click="toggleEdit($index)">Annulla</button>
+        </td>
+      </tr>
+    </tbody>
+    <tr>
+      <td><input type="text" ng-model="newList.nome"></td>
+      <td>
+        <button class="btn btn-primary" ng-click="addList()">Aggiungi Nuovo</button>
+      </td>
+    </tr>
+  </table>
+</div>
