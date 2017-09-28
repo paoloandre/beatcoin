@@ -11,6 +11,8 @@ angular.module('beatCoin')
     $scope.addCard = function(){
       $http.post('/cards', $scope.newCard)
       .success(function(){
+        console.log($scope.user);
+        $scope.newCard._user = $scope.user;
         $scope.cards.push($scope.newCard);
         $scope.newCard = {};
         toastr.success('Carta aggiunta con successo!');

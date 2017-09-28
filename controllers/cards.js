@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-List = require('../app/schema.js').model('Card');
+Card = require('../app/schema.js').model('Card');
 
 exports.findAll = function(req, res){
   Card.find({},function(err, docs) {

@@ -9,6 +9,7 @@ angular.module('beatCoin', [
 ])
 
 .config(function ($stateProvider, $urlRouterProvider, $authProvider, $interpolateProvider) {
+
 // Helper auth function
 var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
 var deferred = $q.defer();
@@ -71,15 +72,15 @@ $stateProvider
   }
 })
 
-// .state('getlists', {
-//   url: '/lists',
-//   templateUrl: '/static/partials/lists.html',
-//   controller: 'ListsCtrl',
-//   resolve: {
-//     loginRequired: loginRequired
-//   }
-// })
-//
+.state('getcards', {
+  url: '/cards',
+  templateUrl: '/static/partials/cards.html',
+  controller: 'CardsCtrl',
+  resolve: {
+    loginRequired: loginRequired
+  }
+})
+
 // .state('getobjects', {
 //   url: '/objects/:listid',
 //   templateUrl: '/static/partials/objects.html',

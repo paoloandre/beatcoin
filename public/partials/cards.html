@@ -1,30 +1,39 @@
   <div class="col-md-12">
-  <h1>Liste</h1>
+  <h1>Carte collegate</h1>
   <table class="table table-striped">
     <thead>
-      <th>Nome</th>
+      <th>Circuito</th>
+      <th>Numero PAN</th>
+      <th> </th>
+      <th> </th>
       <th>Azione</th>
     </thead>
     <tbody>
-      <tr ng-repeat="list in lists">
-        <td ng-hide="list.edit">{[{list.nome}]}</td>
-        <td ng-show="list.edit"><input type="text" ng-model="list.nome"></td>
+      <tr ng-repeat="card in cards">
+        <td ng-hide="card.edit">{[{card.circuito}]}</td>
+        <td ng-hide="card.edit">{[{card.pan}]}</td>
+        <td> </td>
+        <td> </td>
 
-        <td ng-hide="list.edit">
+        <td ng-hide="card.edit">
           <button class="btn btn-success" ng-click="viewDetail($index)">Vedi</button>
-          <button class="btn btn-success" ng-click="toggleEdit($index)">Modifica</button>
-          <button class="btn btn-danger" ng-click="deleteList($index)">Elimina</button>
-        </td>
-        <td ng-show="list.edit">
-          <button class="btn btn-primary" ng-click="saveList($index)">Salva</button>
-          <button class="btn btn-danger" ng-click="toggleEdit($index)">Annulla</button>
+          <button class="btn btn-danger" ng-click="deleteCard($index)">Elimina</button>
         </td>
       </tr>
     </tbody>
+  </thead>
+    <th>Circuito</th>
+    <th>Numero PAN</th>
+    <th>Data di Scadenza</th>
+    <th>Numero di Sicurezza</th>
+  </thead>
     <tr>
-      <td><input type="text" ng-model="newList.nome"></td>
+      <td><input type="text" ng-model="newCard.circuito"></td>
+      <td><input type="text" ng-model="newCard.pan"></td>
+      <td><input type="text" ng-model="newCard.scadenza"></td>
+      <td><input type="text" ng-model="newCard.num_sicurezza"></td>
       <td>
-        <button class="btn btn-primary" ng-click="addList()">Aggiungi Nuovo</button>
+        <button class="btn btn-primary" ng-click="addCard()">Aggiungi Nuova</button>
       </td>
     </tr>
   </table>

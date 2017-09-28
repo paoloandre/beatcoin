@@ -24,7 +24,7 @@
   </div>
   <ul class="nav navbar-nav">
     <li><a href="/#/">Home</a></li>
-    <li ng-if="isAuthenticated()"><a href="/#/profile">Profilo</a></li>
+    <li ng-if="isAuthenticated()" ng-model="user.displayName"><a href="/#/profile">{[{user.displayName}]}</a></li>
   </ul>
   <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
     <li><a href="/#/login">Accedi</a></li>
