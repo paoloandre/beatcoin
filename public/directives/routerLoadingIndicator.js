@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
 .directive('routerLoadingIndicator', function($rootScope) {
   return {
     restrict: 'E',

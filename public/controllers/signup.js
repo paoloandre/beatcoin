@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .controller('SignupCtrl', function($scope, $location, $auth, toastr) {
     $scope.signup = function() {
       $auth.signup($scope.user)

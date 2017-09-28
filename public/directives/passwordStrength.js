@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .directive('passwordStrength', function() {
     return {
       restrict: 'A',

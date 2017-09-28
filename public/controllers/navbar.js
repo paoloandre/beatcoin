@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .controller('NavbarCtrl', function($scope, $auth) {
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();

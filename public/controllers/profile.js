@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .controller('ProfileCtrl', function($scope, $auth, toastr, Account) {
     $scope.getProfile = function() {
       Account.getProfile()

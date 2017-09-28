@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .controller('LogoutCtrl', function($location, $auth, toastr) {
     if (!$auth.isAuthenticated()) { return; }
     $auth.logout()

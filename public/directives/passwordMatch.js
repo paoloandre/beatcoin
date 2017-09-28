@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .directive('passwordMatch', function() {
     return {
       require: 'ngModel',

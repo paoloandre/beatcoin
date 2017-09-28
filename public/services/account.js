@@ -1,4 +1,4 @@
-angular.module('productEditor')
+angular.module('beatCoin')
   .factory('Account', function($http) {
     return {
       getProfile: function() {

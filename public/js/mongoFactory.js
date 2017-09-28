@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('productEditor')
+angular.module('beatCoin')
     .factory('mongoFactory', function ($q, $http) {
         return {
             getMongoStuff: function () {
