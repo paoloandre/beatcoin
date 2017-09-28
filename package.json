@@ -1,0 +1,50 @@
+{
+  "name": "server_node",
+  "version": "1.0.0",
+  "private": "true",
+  "description": "Online Banking",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon --ignore tmp/ app.js",
+    "start": "node app.js"
+  },
+  "author": "Paolo Andreassi",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.9",
+    "angular-route": "^1.6.1",
+    "angular-spinkit": "^0.3.4",
+    "angular2-toaster": "^2.0.0",
+    "async": "^2.1.4",
+    "bcryptjs": "^2.4.0",
+    "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
+    "colors": "^1.1.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "express-fileupload": "0.0.5",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.5",
+    "jquery": "^3.1.1",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.17.1",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.7.8",
+    "morgan": "^1.7.0",
+    "promise": "^7.1.1",
+    "python-shell": "^0.4.0",
+    "request": "^2.79.0",
+    "satellizer": "^0.15.5",
+    "serve-favicon": "^2.3.2",
+    "ui-bootstrap": "^0.1.9",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "should": "~7.1.0",
+    "supertest": "~1.1.0"
+  },
+  "engines": {
+    "node": "4.6.0"
+  }
+}
