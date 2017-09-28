@@ -1,4 +1,4 @@
-angular.module('productEditor', [
+angular.module('beatCoin', [
  'ngResource',
  'ngMessages',
  'ngAnimate',
@@ -71,59 +71,59 @@ $stateProvider
   }
 })
 
-.state('getlists', {
-  url: '/lists',
-  templateUrl: '/static/partials/lists.html',
-  controller: 'ListsCtrl',
-  resolve: {
-    loginRequired: loginRequired
-  }
-})
-
-.state('getobjects', {
-  url: '/objects/:listid',
-  templateUrl: '/static/partials/objects.html',
-  controller: 'ObjectsCtrl',
-  resolve: {
-    loginRequired: loginRequired
-  }
-})
-
-.state('getparts', {
-  url: '/parts/:objectid',
-  templateUrl: '/static/partials/parts.html',
-  controller: 'PartsCtrl',
-  resolve: {
-    loginRequired: loginRequired
-  }
-})
-
-.state('getoptions', {
-  url: '/options/:partid',
-  templateUrl: '/static/partials/options.html',
-  controller: 'OptionsCtrl',
-  resolve: {
-    loginRequired: loginRequired
-  }
-})
-
-.state('goupload', {
-    url: '/goupload',
-    templateUrl: '/static/partials/upload.html',
-    controller: 'uploader',
-    resolve: {
-      loginRequired: loginRequired
-    }
-})
-
-.state('shape', {
-    url:'/shape',
-    templateUrl: '/static/partials/shapes.html',
-    controller: 'GetShapes',
-    resolve:{
-      loginRequired: loginRequired
-    }
-})
+// .state('getlists', {
+//   url: '/lists',
+//   templateUrl: '/static/partials/lists.html',
+//   controller: 'ListsCtrl',
+//   resolve: {
+//     loginRequired: loginRequired
+//   }
+// })
+//
+// .state('getobjects', {
+//   url: '/objects/:listid',
+//   templateUrl: '/static/partials/objects.html',
+//   controller: 'ObjectsCtrl',
+//   resolve: {
+//     loginRequired: loginRequired
+//   }
+// })
+//
+// .state('getparts', {
+//   url: '/parts/:objectid',
+//   templateUrl: '/static/partials/parts.html',
+//   controller: 'PartsCtrl',
+//   resolve: {
+//     loginRequired: loginRequired
+//   }
+// })
+//
+// .state('getoptions', {
+//   url: '/options/:partid',
+//   templateUrl: '/static/partials/options.html',
+//   controller: 'OptionsCtrl',
+//   resolve: {
+//     loginRequired: loginRequired
+//   }
+// })
+//
+// .state('goupload', {
+//     url: '/goupload',
+//     templateUrl: '/static/partials/upload.html',
+//     controller: 'uploader',
+//     resolve: {
+//       loginRequired: loginRequired
+//     }
+// })
+//
+// .state('shape', {
+//     url:'/shape',
+//     templateUrl: '/static/partials/shapes.html',
+//     controller: 'GetShapes',
+//     resolve:{
+//       loginRequired: loginRequired
+//     }
+// })
 
 $urlRouterProvider.otherwise('/');
 

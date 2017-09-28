@@ -1,14 +1,14 @@
 module.exports = function(app){
-    var List = require('./controllers/lists');
+    var Card = require('./controllers/cards');
     var Object = require('./controllers/objects');
     var Part = require('./controllers/parts');
     var Option = require('./controllers/options');
 
-    app.get('/lists', List.findAll);
-    app.get('/lists/:id', List.findById);
-    app.post('/lists', List.add);
-    app.put('/lists/:id', List.update);
-    app.delete('/lists/:id', List.delete);
+    app.get('/cards', Card.findAll);
+    app.get('/cards/:id', Card.findById);
+    app.post('/cards', Card.add);
+    app.put('/cards/:id', Card.update);
+    app.delete('/cards/:id', Card.delete);
 
     app.get('/objects/:listid', Object.findAll);
     app.get('/objects/:id', Object.findById);

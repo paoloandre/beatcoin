@@ -23,12 +23,12 @@ var path = require('path'),
     // getobjects   = require('./app/getobjects'),
     // getparts     = require('./app/getparts'),
     // getoptions   = require('./app/getoptions'),
-    upload       = require('./app/upload'),
-    convert      = require('./app/convert'),
-    converted    = require('./app/converted'),
-    readjsonfile = require('./app/readjsonfile'),
+    // upload       = require('./app/upload'),
+    // convert      = require('./app/convert'),
+    // converted    = require('./app/converted'),
+    // readjsonfile = require('./app/readjsonfile'),
     users        = require('./routes/users'),
-    getshapes    = require('./app/getshapes'),
+    // getshapes    = require('./app/getshapes'),
     config       = require('./config');
 
 // Define User's Schema (Maybe to export)
