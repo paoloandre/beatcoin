@@ -2,10 +2,10 @@
 
 Online Banking
 
-UNICAM Programmazione Web [Corso](http://didattica.cs.unicam.it/doku.php?id=didattica:triennale:pw:ay_1617:main) A.A. 2017/2018 
+UNICAM Programmazione Web [Corso](http://didattica.cs.unicam.it/doku.php?id=didattica:triennale:pw:ay_1617:main) A.A. 2017/2018
 
 ### Utilizzo  
-Dopo aver clonato o scaricato il repo, dalla root lanciare il prompt dei comandi ed eseguire i seguenti comandi:
+Dopo aver [clonato](https://github.com/paoloandre/beatcoin.git) o [scaricato](https://github.com/paoloandre/beatcoin/archive/master.zip) il repo, dalla root lanciare il prompt dei comandi ed eseguire i seguenti comandi:
 
 ```
 npm install
