@@ -1,8 +1,10 @@
-const validator = require("validator");
-const isEmpty = require("lodash/isEmpty");
+"use strict";
 
-module.exports.validateInput = function(data) {
-  let errors = {};
+var validator = require("validator");
+var isEmpty = require("lodash/isEmpty");
+
+module.exports.validateInput = function (data) {
+  var errors = {};
 
   if (!data.email) {
     errors.email = "this field is required";
@@ -32,7 +34,7 @@ module.exports.validateInput = function(data) {
   }
 
   return {
-    errors,
+    errors: errors,
     isValid: isEmpty(errors) //if error is empty than isValid = true
   };
 };

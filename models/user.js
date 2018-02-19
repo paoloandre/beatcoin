@@ -1,10 +1,25 @@
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
-import config from "../config/database";
-import generator from "../finance/CreditCardGenerator";
+"use strict";
+
+var _mongoose = require("mongoose");
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _bcryptjs = require("bcryptjs");
+
+var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+
+var _database = require("../config/database");
+
+var _database2 = _interopRequireDefault(_database);
+
+var _CreditCardGenerator = require("../finance/CreditCardGenerator");
+
+var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //User schema
-const UserSchema = mongoose.Schema({
+var UserSchema = _mongoose2.default.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   username: { type: String, require: true, unique: true },
@@ -12,39 +27,39 @@ const UserSchema = mongoose.Schema({
   passwordConfirmation: { type: String, required: true },
   creditCard: {
     type: String,
-    default: generator.GenCC().toString(),
+    default: _CreditCardGenerator2.default.GenCC().toString(),
     required: true
   },
   balance: { type: Number, default: 0, required: true },
   erAdmin: { type: Boolean }
 });
 
-const User = (module.exports = mongoose.model("User", UserSchema));
+var User = module.exports = _mongoose2.default.model("User", UserSchema);
 
 //get user by id
-module.exports.getUserById = function(id, callback) {
+module.exports.getUserById = function (id, callback) {
   User.findById(id, callback);
 };
 
-module.exports.getUserByUsername = function(username, callback) {
-  const query = { username: username };
+module.exports.getUserByUsername = function (username, callback) {
+  var query = { username: username };
   User.findOne(query, callback);
 };
 
-module.exports.getUserByCard = function(creditCard, callback) {
-  const query = { creditCard: creditCard };
+module.exports.getUserByCard = function (creditCard, callback) {
+  var query = { creditCard: creditCard };
   User.findOne(query, callback);
 };
 
-module.exports.getUserByEmail = function(email, callback) {
-  const query = { email: email };
+module.exports.getUserByEmail = function (email, callback) {
+  var query = { email: email };
   User.findOne(query, callback);
 };
 
-module.exports.addUser = (newUser, callback) => {
+module.exports.addUser = function (newUser, callback) {
   //hash the password passed here as a param
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
+  _bcryptjs2.default.genSalt(10, function (err, salt) {
+    _bcryptjs2.default.hash(newUser.password, salt, function (err, hash) {
       if (err) {
         throw err;
       }
@@ -54,8 +69,8 @@ module.exports.addUser = (newUser, callback) => {
   });
 };
 
-module.exports.comparePassword = (candidatePassword, hash, callback) => {
-  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+module.exports.comparePassword = function (candidatePassword, hash, callback) {
+  _bcryptjs2.default.compare(candidatePassword, hash, function (err, isMatch) {
     if (err) throw err;
     callback(null, isMatch);
   });
