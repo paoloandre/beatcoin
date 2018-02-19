@@ -1,47 +1,26 @@
 "use strict";
 
 var _express = require("express");
-
 var _express2 = _interopRequireDefault(_express);
-
 var _path = require("path");
-
 var _path2 = _interopRequireDefault(_path);
-
 var _bodyParser = require("body-parser");
-
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
-
 var _cors = require("cors");
-
 var _cors2 = _interopRequireDefault(_cors);
-
 var _passport = require("passport");
-
 var _passport2 = _interopRequireDefault(_passport);
-
 var _mongoose = require("mongoose");
-
 var _mongoose2 = _interopRequireDefault(_mongoose);
-
-var _database = require("./config/database");
-
+var _database = require("./config.js");
 var _database2 = _interopRequireDefault(_database);
-
 var _CreditCardGenerator = require("./finance/CreditCardGenerator");
-
 var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
-
 var _socket = require("socket.io");
-
 var _socket2 = _interopRequireDefault(_socket);
-
 var _user = require("./models/user");
-
 var _user2 = _interopRequireDefault(_user);
-
 var _users = require("./routes/users");
-
 var _users2 = _interopRequireDefault(_users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
