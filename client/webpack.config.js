@@ -10,7 +10,7 @@ console.log("is production :" + isProd);
 module.exports = {
   entry: './src/App.js',
   output: {
-    path : path.resolve(__dirname, '../../../HomeBankingDeplo/serverDist/public'),
+    path : path.resolve(__dirname, '../../../beatcoin/public'),
     filename: 'bundle.js',
     publicPath: '/'
   },
