@@ -1,43 +1,25 @@
 "use strict";
 
 var _express = require("express");
-
 var _express2 = _interopRequireDefault(_express);
-
 var _user = require("../models/user");
-
 var _user2 = _interopRequireDefault(_user);
-
 var _transaction = require("../models/transaction");
-
 var _transaction2 = _interopRequireDefault(_transaction);
-
 var _passport = require("passport");
-
 var _passport2 = _interopRequireDefault(_passport);
-
 var _jsonwebtoken = require("jsonwebtoken");
-
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
-
 var _database = require("../config/database");
-
 var _database2 = _interopRequireDefault(_database);
-
 var _bluebird = require("bluebird");
-
 var _bluebird2 = _interopRequireDefault(_bluebird);
-
 var _isEmpty = require("lodash/isEmpty");
-
 var _isEmpty2 = _interopRequireDefault(_isEmpty);
-
 var _signup = require("../validations/signup");
-
 var _signup2 = _interopRequireDefault(_signup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var router = _express2.default.Router();
 
 function validateUnique(data, otherValidation) {

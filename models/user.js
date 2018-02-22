@@ -1,20 +1,15 @@
 "use strict";
 
 var _mongoose = require("mongoose");
-
 var _mongoose2 = _interopRequireDefault(_mongoose);
-
 var _bcryptjs = require("bcryptjs");
-
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
-
-var _database = require("../config/database");
-
+var _database = require("../config");
 var _database2 = _interopRequireDefault(_database);
-
-var _CreditCardGenerator = require("../finance/CreditCardGenerator");
-
-var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
+var _card = require("../models/card");
+var _card2 = _interopRequireDefault(_card);
+// var _CreditCardGenerator = require("../finance/CreditCardGenerator");
+// var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,11 +20,7 @@ var UserSchema = _mongoose2.default.Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, required: true },
   passwordConfirmation: { type: String, required: true },
-  creditCard: {
-    type: String,
-    default: _CreditCardGenerator2.default.GenCC().toString(),
-    required: true
-  },
+  creditCard: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Card'}],
   balance: { type: Number, default: 0, required: true },
   erAdmin: { type: Boolean }
 });

@@ -1,15 +1,10 @@
 "use strict";
 
 var _mongoose = require("mongoose");
-
 var _mongoose2 = _interopRequireDefault(_mongoose);
-
-var _database = require("../config/database");
-
+var _database = require("../config");
 var _database2 = _interopRequireDefault(_database);
-
 var _mongoosePaginate = require("mongoose-paginate");
-
 var _mongoosePaginate2 = _interopRequireDefault(_mongoosePaginate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -18,7 +13,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var TransactionSchema = _mongoose2.default.Schema({
   senderCard: { type: String, required: true },
   receiverCard: { type: String, required: true },
+  description: { type: String},
   transactionBalance: { type: Number, required: true },
+  transactionSign: { type: Number, required: true},
   date: { type: Date, default: Date.now }
 });
 
