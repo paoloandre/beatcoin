@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from './components/NavBar'
 import Portal from './components/Portal'
 import Profile from './components/Profile'
+import Login from './components/LoginDialog'
 import CardManagement from './components/CardManagement'
 
 import requireAuth from './utils/requireAuth'
@@ -34,6 +35,8 @@ constructor(props) {
                         <main className="cd-main-content">
 							<Switch>
 										<Route exact path="/" component={Portal} />
+										<Route exact path="/login" component={Login} />
+										{/* <Route exact path="/signup" component={Signup} /> */}
 										<Route exact path="/profile" component={requireAuth(Profile)} />
 										<Route exact path="/cardmanagement" component={requireAuth(CardManagement)} />
 		  				 </Switch>

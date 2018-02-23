@@ -53,9 +53,9 @@ export class NavBar extends React.Component {
             <ul className="cd-main-nav">
               {!this.props.authen.isAuthenticated ? (
                 <li>
-                  <a>
+                  <a href="/login">
+                  Login
                     {" "}
-                    <LoginDialog />{" "}
                   </a>{" "}
                 </li>
               ) : (
@@ -71,9 +71,6 @@ export class NavBar extends React.Component {
                 </li>
               )}
               <li>
-                <a href="#0">Assistenza</a>
-              </li>
-              <li>
                 {!this.props.authen.isAuthenticated ? (
                   <a />
                 ) : (
@@ -87,9 +84,6 @@ export class NavBar extends React.Component {
                   <span>Servizi Online</span>
                 </a>
                 <ul>
-                  <li className="go-back">
-                    <a href="#0">Menu</a>
-                  </li>
                   <li>
                     <a href="#0">Bonifico</a>
                   </li>
@@ -98,12 +92,6 @@ export class NavBar extends React.Component {
                   </li>
                   <li>
                     <a href="#0">Le mie carte</a>
-                  </li>
-                  <li>
-                    <a href="#0">hi there </a>
-                  </li>
-                  <li>
-                    <a href="#0">Category 5</a>
                   </li>
                   <li>
                     <a href="#0" className="placeholder">

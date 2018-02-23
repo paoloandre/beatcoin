@@ -10,7 +10,7 @@ import { validateInput } from "../utils/signupUtil";
 
 import { addFlashMessage, deleteFlashMessage } from "../actions/flashMessages";
 
-import PropTypes from "prop-types"; // react prop types are depecrated
+import PropTypes from "prop-types"; // react prop types are deprecated
 import { connect } from "react-redux";
 import { linkLogic } from "../utils/linkLogic";
 
