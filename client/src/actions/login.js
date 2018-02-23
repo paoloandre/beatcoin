@@ -13,9 +13,9 @@ export function setCurrentUser(user) {
 }
 
 export function login(data) {
-  // return dispatch => {
-  //   return axios.post(link + "/users/authenticate", data);
-  // };
+  return dispatch => {
+    return axios.post(link + "/users/authenticate", data);
+  };
 }
 
 export function logout() {

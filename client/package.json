@@ -32,7 +32,8 @@
     "dev": "set NODE_ENV=development&& webpack-dev-server --open",
     "prod": "set NODE_ENV=production&& webpack -p",
     "start": "webpack-dev-server --open",
-    "postinstall": "webpack -p"
+    "postinstall": "webpack -p",
+    "build": "webpack"
   },
   "babel": {
     "presets": [

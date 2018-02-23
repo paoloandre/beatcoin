@@ -4,7 +4,7 @@ import Portal from "../components/Portal";
 
 ReactDOM.render(
   <Portal/>,
-  document.getElementById("root")
+  document.getElementById("app")
 );
 
 // import React from 'react';
