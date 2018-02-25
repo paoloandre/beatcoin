@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import Portal from './components/Portal'
 import Profile from './components/Profile'
 import Login from './components/LoginDialog'
+import SignUp from './components/SignUp'
 import CardManagement from './components/CardManagement'
 
 import requireAuth from './utils/requireAuth'
@@ -36,7 +37,7 @@ constructor(props) {
 							<Switch>
 										<Route exact path="/" component={Portal} />
 										<Route exact path="/login" component={Login} />
-										{/* <Route exact path="/signup" component={Signup} /> */}
+										<Route exact path="/signup" component={SignUp} />
 										<Route exact path="/profile" component={requireAuth(Profile)} />
 										<Route exact path="/cardmanagement" component={requireAuth(CardManagement)} />
 		  				 </Switch>

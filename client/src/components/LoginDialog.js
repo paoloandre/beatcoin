@@ -20,7 +20,7 @@ import { validateInput } from "../utils/login";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 
 import jwt from "jsonwebtoken";
-import SignUp from "./SignUp";
+// import SignUp from "./SignUp";
 
 export class LoginDialog extends React.Component {
   constructor(props) {
@@ -132,6 +132,10 @@ export class LoginDialog extends React.Component {
             <br/>
             <RaisedButton label="Login" primary={true}
             onClick={(e) => this.onSubmit(e)}/>
+            <br/>
+            <br/>
+            <RaisedButton label="Sign Up" primary={true}
+            href="/signup"/>
           </div>
         </MuiThemeProvider>
 
@@ -178,10 +182,10 @@ LoginDialog.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default LoginDialog;
-// export default connect(null, {
-//   userSignupRequest,
-//   addFlashMessage,
-//   setCurrentUser,
-//   login
-// })(LoginDialog);
+// export default LoginDialog;
+export default connect(null, {
+  userSignupRequest,
+  addFlashMessage,
+  setCurrentUser,
+  login
+})(LoginDialog);
