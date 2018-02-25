@@ -77,17 +77,15 @@ class SignUp extends React.Component {
     if (this.isValid()) {
       this.setState({ errors: {}, isLoading: true });
       e.preventDefault();
-        return new Promise(resolve => {
-          userSignupRequest(this.state)(() => {
-            resolve();
-          },);
-        })
-      .then(
-        () => {
-
-      // this.props.userSignupRequest(this.state).then(
-      //   // if everything is succesfull
-      //   () => {
+      console.log("success");
+      userSignupRequest(this.state, function (err, callback) {
+          if (err){
+            console.log("error");
+            // if we get an error back with errors with it with populate the state with the data
+            this.setState({ errors: err.response.data, isLoading: false });
+          }
+          // if everything is succesfull
+          console.log("success");
           this.setState({
             username: "",
             password: "",
@@ -105,14 +103,7 @@ class SignUp extends React.Component {
           this.context.router.history.replace('/');
           this.clearFields();
           deleteFlashMessage();
-        },
-        err => {
-          console.log("error");
-        // if we get an error back with errors with it with populate the state with the data
-        // err => {
-        this.setState({ errors: err.response.data, isLoading: false });
-        }
-      );
+      });
   }
 }
 

@@ -34,10 +34,10 @@ class Profile extends React.Component {
       transactions: [],
       chartData: {}
     };
-    this.onCardClick = this.onCardClick.bind(this);
-    this.cc_format = this.cc_format.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onTransfer = this.onTransfer.bind(this);
+    // this.onCardClick = this.onCardClick.bind(this);
+    // this.cc_format = this.cc_format.bind(this);
+    // this.onChange = this.onChange.bind(this);
+    // this.onTransfer = this.onTransfer.bind(this);
   }
 
    // we load the sockets here so we establish the socket layer in the api, live transaction and data is established at
@@ -91,65 +91,65 @@ class Profile extends React.Component {
 
 	// we get the personal info for the socket, without we wouldn't identiy the client
     // that sends the requested socket
-    this.personalInfo();
+    // this.personalInfo();
 
-		this.privateMessage((err, data) => {
-		  console.log(data);
-		  // second axios request to update the balance after a notification from another user
-          axios.get(link + "/users/profile/1").then(response => {
-			//console.log(response.data.user.balance);
-		   this.setState({ balance: response.data.user.balance });
-
-			});
-		});
+		// this.privateMessage((err, data) => {
+		//   console.log(data);
+		//   // second axios request to update the balance after a notification from another user
+    //       axios.get(link + "/users/profile/1").then(response => {
+		// 	//console.log(response.data.user.balance);
+		//    this.setState({ balance: response.data.user.balance });
+    //
+		// 	});
+		// });
 
   }
 
   // these are sockets for real time data transfer
-  privateMessage(cb) {
-    socket.on("whisper", data => cb(null, data));
-  }
+  // privateMessage(cb) {
+  //   socket.on("whisper", data => cb(null, data));
+  // }
 
   // socket part is here
 
-  personalInfo(cb) {
-    // we listen for the info to come, if we don't receive or get an err, we got null, else we got an info and we use that info
-    socket.on("infoRes", info => cb(null, info));
-    socket.emit("infoReq", {
-      id: this.props.authen.id,
-      creditCard: this.props.authen.card
-    });
-  }
+  // personalInfo(cb) {
+  //   // we listen for the info to come, if we don't receive or get an err, we got null, else we got an info and we use that info
+  //   socket.on("infoRes", info => cb(null, info));
+  //   socket.emit("infoReq", {
+  //     id: this.props.authen.id,
+  //     creditCard: this.props.authen.card
+  //   });
+  // }
 
   // TODO this is just a todo
 
-  onTransfer() {
-    axios
-        .put(link + "/users/transfer", {
-        sender: this.props.authen.card,
-        receiver: this.state.cardNumber,
-        amount: this.state.amount
-      })
-      .then(response => {
-		  console.log(response);
-        // if we have a successfully entry in the db, and the successfull manage to happen
-        // we let know about the transfer to the receiver
-        // if the client received the message emit
-        // we 'll make him do another axios request to update his balance
-
-        socket.emit("send message", {
-          name: this.state.cardNumber, // to who are you sending the moneyz
-          msg: "You just received some money, congrats !"
-        });
-
-        // update the sender's balance too here
-        // second axios request to update the balance after a notification from another user
-        axios.get(link + "/users/profile/1").then(response => {
-          console.log(response.data.user.balance);
-          this.setState({ balance: response.data.user.balance });
-        });
-      });
-  }
+  // onTransfer() {
+  //   axios
+  //       .put(link + "/users/transfer", {
+  //       sender: this.props.authen.card,
+  //       receiver: this.state.cardNumber,
+  //       amount: this.state.amount
+  //     })
+  //     .then(response => {
+	// 	  console.log(response);
+  //       // if we have a successfully entry in the db, and the successfull manage to happen
+  //       // we let know about the transfer to the receiver
+  //       // if the client received the message emit
+  //       // we 'll make him do another axios request to update his balance
+  //
+  //       socket.emit("send message", {
+  //         name: this.state.cardNumber, // to who are you sending the moneyz
+  //         msg: "You just received some money, congrats !"
+  //       });
+  //
+  //       // update the sender's balance too here
+  //       // second axios request to update the balance after a notification from another user
+  //       axios.get(link + "/users/profile/1").then(response => {
+  //         console.log(response.data.user.balance);
+  //         this.setState({ balance: response.data.user.balance });
+  //       });
+  //     });
+  // }
 
 
 
@@ -158,26 +158,26 @@ class Profile extends React.Component {
     this.context.router.history.replace("/cardmanagement");
   }
 
-  cc_format(value) {
-    var v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    var matches = v.match(/\d{4,16}/g);
-    var match = (matches && matches[0]) || "";
-    var parts = [];
+  // cc_format(value) {
+  //   var v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+  //   var matches = v.match(/\d{4,16}/g);
+  //   var match = (matches && matches[0]) || "";
+  //   var parts = [];
+  //
+  //   for (var i = 0, len = match.length; i < len; i += 4) {
+  //     parts.push(match.substring(i, i + 4));
+  //   }
+  //
+  //   if (parts.length) {
+  //     return parts.join(" ");
+  //   } else {
+  //     return value;
+  //   }
+  // }
 
-    for (var i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-
-    if (parts.length) {
-      return parts.join(" ");
-    } else {
-      return value;
-    }
-  }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: parseFloat(e.target.value) || 0 });
-  }
+  // onChange(e) {
+  //   this.setState({ [e.target.name]: parseFloat(e.target.value) || 0 });
+  // }
 
   render() {
     Chart.defaults.global.defaultFontColor = "#fff";
@@ -200,17 +200,17 @@ class Profile extends React.Component {
               children={
                 <List>
                   <ListItem
-                    primaryText={this.props.authen.name}
+                    // primaryText={this.props.authen.username}
                     disabled={true}
                     secondaryText="Username"
                   />
                   <ListItem
-                    primaryText={this.props.authen.email}
+                    // primaryText={this.state.authen.email}
                     disabled={true}
                     secondaryText="Email"
                   />
                   <ListItem
-                    primaryText={this.props.authen.name}
+                    // primaryText={this.props.authen.name}
                     disabled={true}
                     secondaryText="Name"
                   />
@@ -229,12 +229,12 @@ class Profile extends React.Component {
                     <div className="six wide column">
                       <img src="https://www.techgoondu.com/wp-content/uploads/2015/03/MasterCard.png" height="70px" />
                     </div>
-                    <div className="ten wide column">
+                    {/* <div className="ten wide column">
                       <ListItem
                         primaryText={this.cc_format(this.props.authen.card)}
                         onClick={this.onCardClick}
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </List>
               }
@@ -311,4 +311,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Profile);
+// export default connect(mapStateToProps)(Profile);
+export default Profile;
