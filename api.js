@@ -1,117 +1,122 @@
 "use strict";
 
-var _express = require("express");
-var _express2 = _interopRequireDefault(_express);
-var _path = require("path");
-var _path2 = _interopRequireDefault(_path);
-var _bodyParser = require("body-parser");
-var _bodyParser2 = _interopRequireDefault(_bodyParser);
-var _cors = require("cors");
-var _cors2 = _interopRequireDefault(_cors);
-var _passport = require("passport");
-var _passport2 = _interopRequireDefault(_passport);
-var _mongoose = require("mongoose");
-var _mongoose2 = _interopRequireDefault(_mongoose);
-var _database = require("./config.js");
-var _database2 = _interopRequireDefault(_database);
-var _CreditCardGenerator = require("./finance/CreditCardGenerator");
-var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
-var _socket = require("socket.io");
-var _socket2 = _interopRequireDefault(_socket);
-var _user = require("./models/user");
-var _user2 = _interopRequireDefault(_user);
-var _users = require("./routes/users");
-var _users2 = _interopRequireDefault(_users);
+var express = require("express"),
+    path = require("path"),
+    bodyParser = require("body-parser"),
+    cors = require("cors"),
+    exphbs = require('express-handlebars'),
+    passport = require("passport"),
+    mongoose = require("mongoose"),
+    database = require("./config.js"),
+// var _CreditCardGenerator = require("./finance/CreditCardGenerator");
+    favicon = require('serve-favicon'),
+// var _socket = require("socket.io");
+// var _socket2 = _interopRequireDefault(_socket);
+    user = require("./models/user"),
+    users = require("./routes/users");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //connect to database
-_mongoose2.default.Promise = require("bluebird");
-_mongoose2.default.connect(_database2.default.database);
+mongoose.Promise = require("bluebird");
+mongoose.connect(database.database);
 
-_mongoose2.default.connection.on("connected", function () {
-  console.log("connected to the database" + _database2.default.database);
+mongoose.connection.on("connected", function () {
+  console.log("connected to the database" + database.database);
 });
 
 //on error connection
-_mongoose2.default.connection.on("error", function (err) {
+mongoose.connection.on("error", function (err) {
   console.log("connected to database" + err);
 });
 
 // initialize our app variable with express
-var app = (0, _express2.default)();
-var port = process.env.PORT || 3000;
+var app = express();
+
+app.set('port', process.env.NODE_PORT || 3000);
+app.set('host', process.env.NODE_IP || 'localhost');
+app.set('view engine', 'handlebars');
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.use('/static', express.static('client'));
+app.use(express.static('partials'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+
 
 //cors middleware
-app.use((0, _cors2.default)());
+app.use(cors());
 
 //set static folder for the front end at the end of the distribution
 // we'll need it later for deployment
 
-app.use(_express2.default.static(_path2.default.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //router
 //body parser middleware
-app.use(_bodyParser2.default.json());
+app.use(bodyParser.json());
 
 //passport middleware
-app.use(_passport2.default.initialize());
-app.use(_passport2.default.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
-require("./config/passport")(_passport2.default);
+require("./config/passport")(passport);
 
-app.use("/users", _users2.default); // route handle for the users
+app.use("/users", users); // route handle for the users
 
 // index route
-app.get('/', function (req, res) {
-  res.sendFile(_path2.default.join(__dirname, 'public/index.html'));
+app.get('/', function(req, res) {
+  res.render('layouts/main.handlebars');
 });
+// app.get('/', function (req, res) {
+//   res.sendFile(_path2.default.join(__dirname, 'public/index.html'));
+// });
 
-app.get('*', function (req, res) {
-  res.sendFile(_path2.default.join(__dirname, 'public/index.html'));
-});
+// app.get('*', function (req, res) {
+//   res.sendFile(_path2.default.join(__dirname, 'public/index.html'));
+// });
 
 //start server
-var server = app.listen(port, function () {
-  console.log("server started on port : " + port);
-});
+var server = app.listen(process.env.PORT || 3000, function() {
+    var port = server.address().port
+    console.log("Express server listening on port %s", port)
+})
 
 // Socket setup
-var serverSocket = (0, _socket2.default)(server);
-serverSocket.listen(5000);
-console.log("websockets listening on port :", 5000);
+// var serverSocket = (0, _socket2.default)(server);
+// serverSocket.listen(5000);
+// console.log("websockets listening on port :", 5000);
 
-var utilisateurs = {};
+// var utilisateurs = {};
 
-serverSocket.of("/chat_infra").on("connection", function (client) {
-  client.on("infoReq", function (data) {
-    console.log(data.creditCard + " connected with ", client.id);
-
-    if (data.creditCard in utilisateurs) {} else {
-      client.nickname = data.creditCard;
-      utilisateurs[client.nickname] = client;
-      // console.log(client.nickname);
-      //   console.log(utilisateurs[data.username].id);
-    }
-  });
+// serverSocket.of("/chat_infra").on("connection", function (client) {
+//   client.on("infoReq", function (data) {
+//     console.log(data.creditCard + " connected with ", client.id);
+//
+//     if (data.creditCard in utilisateurs) {} else {
+//       client.nickname = data.creditCard;
+//       utilisateurs[client.nickname] = client;
+//       // console.log(client.nickname);
+//       //   console.log(utilisateurs[data.username].id);
+//     }
+//   });
 
   // what happens is that a generic client, let's say ha1 whispers to tsu4
   // ha1 looks for tsu4 in the array called utilisateurs ( online users) , if he finds it, he doesn't technically emits and event to him
   //  he makes him fire and event to himself, which means tsu4 will emit a "whisper" event to his own client and will display it
-  client.on("send message", function (data) {
-    var name = data.name;
-    var msg = data.msg;
-    if (name in utilisateurs) {
-      utilisateurs[name].emit("whisper", { msg: msg, from: client.nickname });
-    }
-  });
+  // client.on("send message", function (data) {
+  //   var name = data.name;
+  //   var msg = data.msg;
+  //   if (name in utilisateurs) {
+  //     utilisateurs[name].emit("whisper", { msg: msg, from: client.nickname });
+  //   }
+  // });
 
-  client.on("disconnect", function () {
-    console.log(client.nickname + " disconnected");
-    if (!client.nickname) return;
-    delete utilisateurs[client.nickname];
-  });
-});
+//   client.on("disconnect", function () {
+//     console.log(client.nickname + " disconnected");
+//     if (!client.nickname) return;
+//     delete utilisateurs[client.nickname];
+//   });
+// });
 
 /*
 User.getUserById(user._id, (err, user) => {

@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>BeatCoin</title>
-    <link rel="stylesheet" href="/static/stylesheets/bootstrap.css" charset="utf-8">
-    <link rel="stylesheet" href="/static/stylesheets/bootstrap-theme.css" charset="utf-8">
-    <link rel="stylesheet" href="/static/stylesheets/angular-spinkit.min.css" charset="utf-8">
-    <link rel="stylesheet" href="/static/stylesheets/sk-folding-cube.css" charset="utf-8">
+    <!-- <link rel="stylesheet" href="client/src/stylesheets/bootstrap.css" charset="utf-8"> -->
+    <!-- <link rel="stylesheet" href="client/src/stylesheets/bootstrap-theme.css" charset="utf-8"> -->
+    <!-- <link rel="stylesheet" href="client/src/stylesheets/angular-spinkit.min.css" charset="utf-8"> -->
+    <!-- <link rel="stylesheet" href="client/src/stylesheets/sk-folding-cube.css" charset="utf-8"> -->
     <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
     <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
-    <link href="/static/stylesheets/angular-toastr.css" rel="stylesheet">
-    <link href="/static/stylesheets/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
+    <!-- <link href="client/src/stylesheets/styles.css" rel="stylesheet"> -->
   </head>
 
 <body>
@@ -39,38 +39,39 @@
 
     <!-- external scripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="/static/vendor/angular.js"></script>
-    <script src="/static/vendor/angular-toastr.js"></script>
-    <script src="/static/vendor/angular-toastr.tpls.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.9/angular.js"></script>
+    <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <!-- <script src="https://raw.githubusercontent.com/Foxandxss/angular-toastr/master/dist/angular-toastr.tpls.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
-    <script src="/static/vendor/angular-animate.js"></script>
-    <script src="/static/vendor/angular-messages.js"></script>
-    <script src="/static/vendor/angular-resource.js"></script>
-    <script src="/static/vendor/angular-sanitize.js"></script>
-    <script src="/static/vendor/angular-ui-router.js"></script>
-    <!-- <script src="/static/vendor/satellizer.js"></script> -->
+    <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <!-- <script src="client/src/vendor/angular-animate.js"></script> -->
+    <!-- <script src="client/src/vendor/angular-messages.js"></script> -->
+    <!-- <script src="client/src/vendor/angular-resource.js"></script> -->
+    <!-- <script src="client/src/vendor/angular-sanitize.js"></script> -->
+    <!-- <script src="client/src/vendor/angular-ui-router.js"></script> -->
+    <!-- <script src="client/src/vendor/satellizer.js"></script> -->
 
     <!-- application scripts-->
-    <script src="/static/js/angular-spinkit.min.js"></script>
-    <script src="/static/app.js"></script>
-    <!-- <script src="/static/directives/passwordStrength.js"></script> -->
-    <!-- <script src="/static/directives/passwordMatch.js"></script> -->
-    <!-- <script src="/static/directives/routerLoadingIndicator.js"></script> -->
-    <script src="/static/controllers/home.js"></script>
-    <script src="/static/controllers/login.js"></script>
-    <script src="/static/controllers/signup.js"></script>
-    <script src="/static/controllers/logout.js"></script>
-    <script src="/static/controllers/profile.js"></script>
-    <script src="/static/controllers/navbar.js"></script>
-    <!-- <script src="/static/controllers/getshapes.js"></script> -->
-    <!-- <script src="/static/controllers/cards.js"></script> -->
-    <!-- <script src="/static/controllers/objects.js"></script>
-    <script src="/static/controllers/parts.js"></script>
-    <script src="/static/controllers/options.js"></script> -->
-    <script src="/static/services/account.js"></script>
-    <!-- <script src="/static/controllers/upload.js"></script> -->
+    <!-- <script src="client/src/js/angular-spinkit.min.js"></script> -->
+    <script src="static/src/App.js"></script>
+    <!-- <script src="client/src/directives/passwordStrength.js"></script> -->
+    <!-- <script src="client/src/directives/passwordMatch.js"></script> -->
+    <!-- <script src="client/src/directives/routerLoadingIndicator.js"></script> -->
+    <script src="static/src/controllers/home.js"></script>
+    <script src="static/src/controllers/login.js"></script>
+    <script src="static/src/controllers/signup0.js"></script>
+    <script src="static/src/controllers/logout.js"></script>
+    <script src="static/src/controllers/profile0.js"></script>
+    <script src="static/src/controllers/navbar0.js"></script>
+    <!-- <script src="client/src/controllers/getshapes.js"></script> -->
+    <!-- <script src="client/src/controllers/cards.js"></script> -->
+    <!-- <script src="client/src/controllers/objects.js"></script>
+    <script src="client/src/controllers/parts.js"></script>
+    <script src="client/src/controllers/options.js"></script> -->
+    <!-- <script src="client/src/services/account.js"></script> -->
+    <!-- <script src="client/src/controllers/upload.js"></script> -->
   </body>
 </html>
