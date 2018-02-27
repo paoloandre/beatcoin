@@ -8,26 +8,26 @@ angular.module('beatCoin', [
  ])
 
 .config(function ($stateProvider, $urlRouterProvider, $authProvider, $interpolateProvider) {
-// // Helper auth function
-// var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
-// var deferred = $q.defer();
-// if ($auth.isAuthenticated()) {
-//     deferred.reject();
-//   } else {
-//     deferred.resolve();
-//   }
-//   return deferred.promise;
-// }];
-//
-// var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
-// var deferred = $q.defer();
-// if ($auth.isAuthenticated()) {
-//   deferred.resolve();
-//   } else {
-//     $location.path('/login');
-//   }
-//   return deferred.promise;
-// }];
+// Helper auth function
+var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
+var deferred = $q.defer();
+if ($auth.isAuthenticated()) {
+    deferred.reject();
+  } else {
+    deferred.resolve();
+  }
+  return deferred.promise;
+}];
+
+var loginRequired = ['$q', '$location', '$auth', function($q, $location, $auth) {
+var deferred = $q.defer();
+if ($auth.isAuthenticated()) {
+  deferred.resolve();
+  } else {
+    $location.path('/login');
+  }
+  return deferred.promise;
+}];
 
 // App routes
 $stateProvider
@@ -41,18 +41,18 @@ $stateProvider
   url: '/login',
   templateUrl: '/static/src/partials/login.html',
   controller: 'LoginCtrl',
-  // resolve: {
-  //   skipIfLoggedIn: skipIfLoggedIn
-  // }
+  resolve: {
+    skipIfLoggedIn: skipIfLoggedIn
+  }
 })
 
 .state('signup', {
   url: '/signup',
   templateUrl: '/static/src/partials/signup.html',
-  controller: 'SignupCtrl'
-  // resolve: {
-  //   skipIfLoggedIn: skipIfLoggedIn
-  // }
+  controller: 'SignupCtrl',
+  resolve: {
+    skipIfLoggedIn: skipIfLoggedIn
+  }
 })
 
 .state('logout', {

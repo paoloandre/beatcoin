@@ -130,13 +130,13 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
 
 //Login with email
 app.post('/auth/login', function(req, res) {
-  User.findOne({ email: req.body.email }, '+password', function(err, user) {
+  User.findOne({ email: req.body.email }, 'password', function(err, user) {
     if (!user) {
-      return res.status(401).send({ message: 'Invalid email and/or password' });
+      return res.status(401).send({ message: 'E-mail not found' });
     }
-    user.comparePassword(req.body.password, function(err, isMatch) {
+    user.comparePassword(req.body.password, user.password, function(err, isMatch) {
       if (!isMatch) {
-        return res.status(401).send({ message: 'Invalid email and/or password' });
+        return res.status(401).send({ message: 'Invalid password' });
       }
       res.send({ token: createJWT(user) });
     });
@@ -149,18 +149,13 @@ app.post('/auth/signup', function(req, res) {
     if (existingUser) {
       return res.status(409).send({ message: 'Email is already taken' });
     }
-    // var user = new User({
-    //   displayName: req.body.displayName,
-    //   email: req.body.email,
-    //   password: req.body.password
-    // });
     var user = new User({
-        name: req.body.fullName,
+        name: req.body.fullname,
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
       });
-    user.save(function(err, result) {
+    User.addUser(user, function(err, result) {
       if (err) {
         res.status(500).send({ message: err.message });
       }

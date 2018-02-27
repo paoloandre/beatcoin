@@ -5,10 +5,10 @@
         <h2 class="text-center">Sign Up</h2>
         <form method="post" ng-submit="signup()" name="signupForm">
           <!-- Full Name -->
-          <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.fullName.$invalid && signupForm.fullName.$dirty }">
-            <input class="form-control input-lg" type="text" name="fullName" ng-model="user.fullName" placeholder="Name" required autofocus>
+          <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.fullname.$invalid && signupForm.fullname.$dirty }">
+            <input class="form-control input-lg" type="text" name="fullname" ng-model="user.fullname" placeholder="Name" required autofocus>
             <span class="ion-person form-control-feedback"></span>
-            <div class="help-block text-danger" ng-if="signupForm.fullName.$dirty" ng-messages="signupForm.fullName.$error">
+            <div class="help-block text-danger" ng-if="signupForm.fullname.$dirty" ng-messages="signupForm.fullname.$error">
               <div ng-message="required">Your entire name</div>
             </div>
           </div>
@@ -47,7 +47,7 @@
           </div>
           <button type="submit" ng-disabled="signupForm.$invalid" class="btn btn-lg btn-block btn-primary">Registrati</button>
           <br/>
-          <p class="text-center text-muted">Hai già un account? <a href="/#/login">Accedi ora</a></p>
+          <p class="text-center text-muted">Hai già un account? <a href="/#!/login">Accedi ora</a></p>
         </form>
       </div>
     </div>

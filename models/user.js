@@ -1,30 +1,31 @@
 "use strict";
 
-var _mongoose = require("mongoose");
-var _mongoose2 = _interopRequireDefault(_mongoose);
-var _bcryptjs = require("bcryptjs");
-var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
-var _database = require("../config");
-var _database2 = _interopRequireDefault(_database);
-var _card = require("../models/card");
-var _card2 = _interopRequireDefault(_card);
+var mongoose = require("mongoose");
+var bcryptjs = require("bcryptjs");
+var database = require("../config");
+var card = require("../models/card");
 // var _CreditCardGenerator = require("../finance/CreditCardGenerator");
 // var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 //User schema
-var UserSchema = _mongoose2.default.Schema({
+var UserSchema = mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   username: { type: String, require: true, unique: true },
   password: { type: String, required: true },
-  creditCard: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Card'}],
+  creditCard: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Card'}],
   balance: { type: Number, default: 0, required: true },
   erAdmin: { type: Boolean }
 });
 
-var User = module.exports = _mongoose2.default.model("User", UserSchema);
+// Decrypting password to compare
+UserSchema.methods.comparePassword = function(password, hash, done) {
+  bcryptjs.compare(password, hash, function(err, isMatch) {
+    done(err, isMatch);
+  });
+};
+
+var User = module.exports = mongoose.model("User", UserSchema);
 
 //get user by id
 module.exports.getUserById = function (id, callback) {
@@ -47,21 +48,14 @@ module.exports.getUserByEmail = function (email, callback) {
 };
 
 module.exports.addUser = function (newUser, callback) {
-  //hash the password passed here as a param
-  _bcryptjs2.default.genSalt(10, function (err, salt) {
-    _bcryptjs2.default.hash(newUser.password, salt, function (err, hash) {
-      if (err) {
-        throw err;
-      }
-      newUser.password = hash;
-      newUser.save(callback);
+  // Crypting password
+    bcryptjs.genSalt(10, function(err, salt) {
+      bcryptjs.hash(newUser.password, salt, function(err, hash) {
+        if (err) {
+          throw err;
+        }
+        newUser.password = hash;
+        newUser.save(callback);
+      });
     });
-  });
-};
-
-module.exports.comparePassword = function (candidatePassword, hash, callback) {
-  _bcryptjs2.default.compare(candidatePassword, hash, function (err, isMatch) {
-    if (err) throw err;
-    callback(null, isMatch);
-  });
 };
