@@ -1,6 +1,6 @@
 angular.module('beatCoin')
-  .controller('NavbarCtrl', function($scope) {
-    // $scope.isAuthenticated = function() {
-    //   return $auth.isAuthenticated();
-    // };
+  .controller('NavbarCtrl', function($scope, $auth) {
+    $scope.isAuthenticated = function() {
+      return $auth.isAuthenticated();
+    };
   });

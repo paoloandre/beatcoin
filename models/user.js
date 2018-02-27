@@ -19,7 +19,6 @@ var UserSchema = _mongoose2.default.Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, require: true, unique: true },
   password: { type: String, required: true },
-  passwordConfirmation: { type: String, required: true },
   creditCard: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Card'}],
   balance: { type: Number, default: 0, required: true },
   erAdmin: { type: Boolean }
