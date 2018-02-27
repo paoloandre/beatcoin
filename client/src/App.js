@@ -63,14 +63,14 @@ $stateProvider
 
 .state('profile', {
   url: '/profile',
-  templateUrl: '/static/partials/profile.html',
+  templateUrl: '/static/src/partials/profile.html',
   controller: 'ProfileCtrl',
-  // resolve: {
-  //   loginRequired: loginRequired
-  // }
+  resolve: {
+    loginRequired: loginRequired
+  }
 })
 
-$urlRouterProvider.otherwise('/');
+$urlRouterProvider.otherwise('/#!/');
 
 // Satellizer config
 $authProvider.facebook({

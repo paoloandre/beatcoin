@@ -44,20 +44,20 @@ app.set('port', process.env.NODE_PORT || 3000);
 app.set('host', process.env.NODE_IP || 'localhost');
 app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('client'));
 app.use(express.static('partials'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 //router
-//body parser middleware
-app.use(bodyParser.json());
 
 //passport middleware
 // app.use(passport.initialize());
 // app.use(passport.session());
 // require("./config/passport")(passport);
 
-app.use("/users", users); // route handle for the users
+// app.use("/users", users); // route handle for the users
 
 // Force HTTPS on Heroku
 if (app.get('env') === 'production') {
@@ -100,7 +100,7 @@ function ensureAuthenticated(req, res, next) {
 // Generate JWT
 function createJWT(user) {
   var payload = {
-    sub: User._id,
+    sub: user._id,
     iat: moment().unix(),
     exp: moment().add(14, 'days').unix()
   };
@@ -120,7 +120,7 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
-    user.username = req.body.username || user.username;
+    user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.save(function(err) {
       res.status(200).end();
@@ -138,6 +138,18 @@ app.post('/auth/login', function(req, res) {
       if (!isMatch) {
         return res.status(401).send({ message: 'Invalid password' });
       }
+      // res.json({
+      //           success: true,
+      //           token: token,
+      //           user: {
+      //             id: user._id,
+      //             name: user.name,
+      //             username: user.username,
+      //             email: user.email,
+      //             creditCard: user.creditCard,
+      //             balance: user.balance
+      //           }
+      //         });
       res.send({ token: createJWT(user) });
     });
   });

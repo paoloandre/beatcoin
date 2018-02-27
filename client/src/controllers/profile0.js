@@ -1,9 +1,10 @@
 angular.module('beatCoin')
-  .controller('ProfileCtrl', function($scope, $auth, toastr, Account) {
+  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, $rootScope) {
     $scope.getProfile = function() {
       Account.getProfile()
         .then(function(response) {
           $scope.user = response.data;
+          $rootScope.currentUser = response.data;
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);

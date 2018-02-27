@@ -4,7 +4,7 @@ angular.module('beatCoin')
       $auth.signup($scope.user)
         .then(function(response) {
           $auth.setToken(response);
-          $location.path('/');
+          $location.path('/profile');
           toastr.info('You have successfully created a new account and have been signed-in');
         })
         .catch(function(response) {
