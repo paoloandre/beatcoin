@@ -21,23 +21,30 @@
   <div class="panel panel-default">
     <div class="panel-heading">Account</div>
     <legend>Balance</legend>
-    <label ng-model="currentUser.balance"><i class="glyphicon glyphicon-euro"></i> {[{currentUser.balance}]}</label>
+    <label ng-model="currentUser.balance"><i class="glyphicon glyphicon-euro"></i> {[{currentUser.balance}]}</label></br>
     <legend>Cards</legend>
-    <table>
-    <thead>
-      <th><b>panCode</b>
-          <div>circuit</div>
-      </th>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>PAN Code</th>
+        <th>Circuit</th>
+        <th>Expire Date</th>
+        <th>Sec Number</th>
+        <th>Balance</th>
+      </tr>
     </thead>
-    <div>
     <tbody>
-      <tr class="list-group-item" ng-repeat="stuff in cards">
-        <td><b>{[{stuff.panCode}]}</b>
-        <div>{[{stuff.circuit}]}</div></td>
+      <tr ng-repeat="card in cards">
+        <td>{[{card.panCode}]}</td>
+        <td>{[{card.circuit}]}</td>
+        <td>{[{card.expDate}]}</td>
+        <td>{[{card.securityNumb}]}</td>
+        <td>{[{card.balance}]}</td>
       </tr>
     </tbody>
-    </div>
     </table>
+  </div></br>
     <button ng-click="add=!add">+</button>
     <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
       <div class="form-group">

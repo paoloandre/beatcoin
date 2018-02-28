@@ -2,7 +2,6 @@ angular.module('beatCoin')
   .factory('Card', function($http) {
     return {
       getCards: function() {
-        console.log("getting api/cards");
         return $http.get('/api/cards');
       },
       addCard: function(user, card) {

@@ -7,7 +7,6 @@ angular.module('beatCoin')
       Account.getProfile()
         .then(function(response) {
           $scope.user = response.data;
-          console.log($scope.user);
           $rootScope.currentUser = response.data;
         })
         .catch(function(response) {
@@ -29,7 +28,6 @@ angular.module('beatCoin')
       Card.getCards()
         .then(function(response) {
           $scope.cards = response.data;
-          console.log($scope.cards);
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
