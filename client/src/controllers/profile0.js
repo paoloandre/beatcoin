@@ -7,14 +7,8 @@ angular.module('beatCoin')
       Account.getProfile()
         .then(function(response) {
           $scope.user = response.data;
+          console.log($scope.user);
           $rootScope.currentUser = response.data;
-          $scope.getCards()
-            .then(function(response) {
-
-            })
-            .catch(function(response) {
-              toastr.error(response.data.message, response.status);
-            });
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
@@ -32,12 +26,10 @@ angular.module('beatCoin')
     };
 
     $scope.getCards = function() {
-      console.log($rootScope.currentUser);
       Card.getCards()
         .then(function(response) {
-          console.log(response.data);
-          // $scope.card = response.data;
-          // $rootScope.currentUser = response.data;
+          $scope.cards = response.data;
+          console.log($scope.cards);
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
@@ -54,5 +46,22 @@ angular.module('beatCoin')
       });
     };
 
-    $scope.getProfile();
+    $scope.getProfile()
+    $scope.getCards()
+
+    // .then(function() {
+    //
+    //     .then(function(response) {
+    //       console.log(response.data);
+    //       // $scope.cards = response.data;
+    //       // console.log($scope.cards);
+    //     })
+    //     .catch(function(response) {
+    //       toastr.error("Error in getCards");
+    //     });
+    // })
+    // .catch(function() {
+    //   toastr.error("Error in getProfile");
+    // });
+
   });

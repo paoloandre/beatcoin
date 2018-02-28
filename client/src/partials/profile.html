@@ -23,8 +23,21 @@
     <legend>Balance</legend>
     <label ng-model="currentUser.balance"><i class="glyphicon glyphicon-euro"></i> {[{currentUser.balance}]}</label>
     <legend>Cards</legend>
-    <!-- ng-repeat for cards -->
-    <label>Your Cards</label></br>
+    <table>
+    <thead>
+      <th><b>panCode</b>
+          <div>circuit</div>
+      </th>
+    </thead>
+    <div>
+    <tbody>
+      <tr class="list-group-item" ng-repeat="stuff in cards">
+        <td><b>{[{stuff.panCode}]}</b>
+        <div>{[{stuff.circuit}]}</div></td>
+      </tr>
+    </tbody>
+    </div>
+    </table>
     <button ng-click="add=!add">+</button>
     <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
       <div class="form-group">

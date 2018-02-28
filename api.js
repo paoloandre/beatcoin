@@ -131,20 +131,17 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
 
 // GET api/cards
 app.get('/api/cards', ensureAuthenticated, function(req, res) {
-  // console.log(req.user);
   User.findById(req.user, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
-    console.log(user._id);
     Card.find({'owner': user._id}, function(err, cards) {
       if (!cards) {
         return res.status(400).send({ message: 'No cards found' });
       }
-      console.log(cards);
-      // res.send(cards);
+      // console.log(cards);
+      res.send(cards);
     });
-    // res.(user);
   });
 });
 
