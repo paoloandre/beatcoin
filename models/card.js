@@ -12,7 +12,8 @@ var CardSchema = mongoose.Schema({
   circuit: { type: String, required: true },
   expDate: { type: String, required: true },
   securityNumb: { type: Number, required: true},
-  balance: {type: Number, required: true}
+  balance: {type: Number, required: true},
+  owner: {type: String, required: true}
 });
 
 var Card = module.exports = mongoose.model("Card", CardSchema);

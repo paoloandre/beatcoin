@@ -1,13 +1,11 @@
 angular.module('beatCoin')
   .factory('Card', function($http) {
     return {
-      getCards: function(user) {
-        // return $http.get('/api/cards');
-        // console.log("getting api/cards");
+      getCards: function() {
+        console.log("getting api/cards");
+        return $http.get('/api/cards');
       },
       addCard: function(user, card) {
-        // console.log(user._id);
-        // console.log(card);
         var card = {
           "user": user._id,
           "panCode": card.panCode,
@@ -16,7 +14,6 @@ angular.module('beatCoin')
           "securityNumb": card.securityNumb,
           "balance": card.balance
         };
-        // console.log(card);
         return $http.put('/api/cards', card);
       }
     };

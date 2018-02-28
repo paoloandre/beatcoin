@@ -129,31 +129,46 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
   });
 });
 
-
+// GET api/cards
+app.get('/api/cards', ensureAuthenticated, function(req, res) {
+  // console.log(req.user);
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    console.log(user._id);
+    Card.find({'owner': user._id}, function(err, cards) {
+      if (!cards) {
+        return res.status(400).send({ message: 'No cards found' });
+      }
+      console.log(cards);
+      // res.send(cards);
+    });
+    // res.(user);
+  });
+});
 
 // PUT api/cards
 app.put('/api/cards', ensureAuthenticated, function(req, res) {
-  // console.log(req.body);
   User.findById(req.body.user, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
-    // console.log(user);
     var card = new Card({
       panCode:  req.body.panCode,
       circuit: req.body.circuit,
       expDate: req.body.expDate,
       securityNumb: req.body.securityNumb,
-      balance: req.body.balance
+      balance: req.body.balance,
+      owner: req.body.user
     });
     card.save(function(err) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        console.log(card._id);
+        // console.log(card._id);
         user.creditCard.push(card._id);
-        console.log(user.creditCard);
-        // user.creditCard[0]._id = card._id;
+        // console.log(user.creditCard);
         var balanceupdate = parseInt(user.balance);
         balanceupdate += parseInt(req.body.balance);
         user.balance = balanceupdate;
