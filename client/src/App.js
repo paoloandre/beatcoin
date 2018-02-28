@@ -1,14 +1,12 @@
 angular.module('beatCoin', [
- // 'ngResource',
- // 'ngMessages',
- // 'ngAnimate',
- 'ngTouch',
- 'toastr',
- 'ui.router',
- 'satellizer'
+  // 'chart.js',
+  'ngTouch',
+  'toastr',
+  'ui.router',
+  'satellizer'
  ])
 
-.config(function ($stateProvider, $urlRouterProvider, $authProvider, $interpolateProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $interpolateProvider) {
 // Helper auth function
 var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
 var deferred = $q.defer();
@@ -72,17 +70,6 @@ $stateProvider
 })
 
 $urlRouterProvider.otherwise('/#!/');
-
-// Satellizer config
-$authProvider.facebook({
-  // clientId: '1838486779739552'
-  clientId: 'FB'
-});
-
-$authProvider.google({
-  // clientId: '22271471199-bf7ncvn6j52228gnrkvo7pr19al7s23u.apps.googleusercontent.com'
-  clientId: 'google'
-});
 
 $interpolateProvider.startSymbol('{[{');
 $interpolateProvider.endSymbol('}]}');

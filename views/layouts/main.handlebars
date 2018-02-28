@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>BeatCoin</title>
-    <!-- <link rel="stylesheet" href="client/src/stylesheets/bootstrap.css" charset="utf-8"> -->
-    <!-- <link rel="stylesheet" href="client/src/stylesheets/bootstrap-theme.css" charset="utf-8"> -->
-    <!-- <link rel="stylesheet" href="client/src/stylesheets/angular-spinkit.min.css" charset="utf-8"> -->
-    <!-- <link rel="stylesheet" href="client/src/stylesheets/sk-folding-cube.css" charset="utf-8"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
     <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
     <link rel="icon" href="static/src/favicon.ico" />
-    <!-- <link href="static/src/stylesheets/styles.css" rel="stylesheet"> -->
+    <link href="static/src/stylesheets/styles.css" rel="stylesheet">
   </head>
 
 <body>
@@ -24,7 +20,6 @@
     <a class="navbar-brand" href="/#!/"><i class="ion-ios7-pulse-strong"></i>BeatCoin</a>
   </div>
   <ul class="nav navbar-nav">
-    <li><a href="/#!/">Home</a></li>
     <li ng-if="isAuthenticated()" ng-model="currentUser.name"><a href="/#!/profile">{[{currentUser.name}]}</a></li>
   </ul>
   <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
@@ -44,21 +39,13 @@
     <script src="https://npmcdn.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
     <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- <script src="https://raw.githubusercontent.com/Foxandxss/angular-toastr/master/dist/angular-toastr.tpls.js"></script> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script> -->
     <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
     <script src="https://code.angularjs.org/1.6.9/angular-touch.js"></script>
-    <!-- <script src="client/src/vendor/angular-animate.js"></script> -->
-    <!-- <script src="client/src/vendor/angular-messages.js"></script> -->
-    <!-- <script src="client/src/vendor/angular-resource.js"></script> -->
-    <!-- <script src="client/src/vendor/angular-sanitize.js"></script> -->
-    <!-- <script src="client/src/vendor/angular-ui-router.js"></script> -->
 
     <!-- application scripts-->
-    <!-- <script src="client/src/js/angular-spinkit.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-charts/0.2.7/angular-charts.min.js"></script>
     <script src="static/src/App.js"></script>
     <script src="static/src/directives/passwordStrength.js"></script>
     <script src="static/src/directives/passwordMatch.js"></script>
@@ -70,5 +57,6 @@
     <script src="static/src/controllers/navbar0.js"></script>
     <!-- <script src="client/src/controllers/cards.js"></script> -->
     <script src="static/src/services/account.js"></script>
+    <script src="static/src/services/card.js"></script>
   <!-- </body> -->
 </html>

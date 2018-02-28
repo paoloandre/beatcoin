@@ -22,6 +22,7 @@ var path = require('path'),
     favicon = require('serve-favicon'),
     config = require("./config.js"),
     User = require("./models/user"),
+    Card = require("./models/card"),
     users = require("./routes/users");
 
 // function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -75,7 +76,7 @@ var corsOptions = {
   optionsSuccessStatus: 200
 };
 
-// 'Login Required' Middleware (Maybe to export)
+// 'Login Required' Middleware
 function ensureAuthenticated(req, res, next) {
   if (!req.header('Authorization')) {
     return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
@@ -128,6 +129,44 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
   });
 });
 
+
+
+// PUT api/cards
+app.put('/api/cards', ensureAuthenticated, function(req, res) {
+  // console.log(req.body);
+  User.findById(req.body.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    // console.log(user);
+    var card = new Card({
+      panCode:  req.body.panCode,
+      circuit: req.body.circuit,
+      expDate: req.body.expDate,
+      securityNumb: req.body.securityNumb,
+      balance: req.body.balance
+    });
+    card.save(function(err) {
+        if (err) {
+            res.status(500).send({ message: err.message });
+        }
+        console.log(card._id);
+        user.creditCard.push(card._id);
+        console.log(user.creditCard);
+        // user.creditCard[0]._id = card._id;
+        var balanceupdate = parseInt(user.balance);
+        balanceupdate += parseInt(req.body.balance);
+        user.balance = balanceupdate;
+        user.save(function(err) {
+          if (err) {
+              res.status(500).send({ message: err.message });
+          }
+            res.status(200).end();
+        });
+      });
+  });
+});
+
 //Login with email
 app.post('/auth/login', function(req, res) {
   User.findOne({ email: req.body.email }, 'password', function(err, user) {
@@ -176,152 +215,6 @@ app.post('/auth/signup', function(req, res) {
   });
 });
 
-//Login with google
-app.post('/auth/google', function(req, res) {
-  var accessTokenUrl = 'https://accounts.google.com/o/oauth2/token';
-  var peopleApiUrl = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect';
-  var params = {
-    code: req.body.code,
-    client_id: req.body.clientId,
-    client_secret: config.GOOGLE_SECRET,
-    redirect_uri: req.body.redirectUri,
-    grant_type: 'authorization_code'
-  };
-
-  // Step 1. Exchange authorization code for access token.
-  request.post(accessTokenUrl, { json: true, form: params }, function(err, response, token) {
-    var accessToken = token.access_token;
-    var headers = { Authorization: 'Bearer ' + accessToken };
-
-    // Step 2. Retrieve profile information about the current user.
-    request.get({ url: peopleApiUrl, headers: headers, json: true }, function(err, response, profile) {
-      if (profile.error) {
-        return res.status(500).send({message: profile.error.message});
-      }
-      // Step 3a. Link user accounts.
-      if (req.header('Authorization')) {
-        User.findOne({ google: profile.sub }, function(err, existingUser) {
-          if (existingUser) {
-            return res.status(409).send({ message: 'There is already a Google account that belongs to you' });
-          }
-          var token = req.header('Authorization').split(' ')[1];
-          var payload = jwt.decode(token, config.TOKEN_SECRET);
-          User.findById(payload.sub, function(err, user) {
-            if (!user) {
-              return res.status(400).send({ message: 'User not found' });
-            }
-            user.google = profile.sub;
-            user.picture = user.picture || profile.picture.replace('sz=50', 'sz=200');
-            user.username = user.username || profile.name;
-            user.save(function() {
-              var token = createJWT(user);
-              res.send({ token: token });
-            });
-          });
-        });
-      } else {
-        // Step 3b. Create a new user account or return an existing one.
-        User.findOne({ google: profile.sub }, function(err, existingUser) {
-          if (existingUser) {
-            return res.send({ token: createJWT(existingUser) });
-          }
-          var user = new User();
-          user.google = profile.sub;
-          user.picture = profile.picture.replace('sz=50', 'sz=200');
-          user.username = profile.name;
-          user.save(function(err) {
-            var token = createJWT(user);
-            res.send({ token: token });
-          });
-        });
-      }
-    });
-  });
-});
-
-//Login with facebook
-app.post('/auth/facebook', function(req, res) {
-  var fields = ['id', 'email', 'first_name', 'last_name', 'link', 'name'];
-  var accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
-  var graphApiUrl = 'https://graph.facebook.com/v2.5/me?fields=' + fields.join(',');
-  var params = {
-    code: req.body.code,
-    client_id: req.body.clientId,
-    client_secret: config.FACEBOOK_SECRET,
-    redirect_uri: req.body.redirectUri
-  };
-
-  // Step 1. Exchange authorization code for access token.
-  request.get({ url: accessTokenUrl, qs: params, json: true }, function(err, response, accessToken) {
-    if (response.statusCode !== 200) {
-      return res.status(500).send({ message: accessToken.error.message });
-    }
-
-    // Step 2. Retrieve profile information about the current user.
-    request.get({ url: graphApiUrl, qs: accessToken, json: true }, function(err, response, profile) {
-      if (response.statusCode !== 200) {
-        return res.status(500).send({ message: profile.error.message });
-      }
-      if (req.header('Authorization')) {
-        User.findOne({ facebook: profile.id }, function(err, existingUser) {
-          if (existingUser) {
-            return res.status(409).send({ message: 'There is already a Facebook account that belongs to you' });
-          }
-          var token = req.header('Authorization').split(' ')[1];
-          var payload = jwt.decode(token, config.TOKEN_SECRET);
-          User.findById(payload.sub, function(err, user) {
-            if (!user) {
-              return res.status(400).send({ message: 'User not found' });
-            }
-            user.facebook = profile.id;
-            user.picture = user.picture || 'https://graph.facebook.com/v2.3/' + profile.id + '/picture?type=large';
-            user.username = user.username || profile.name;
-            user.save(function() {
-              var token = createJWT(user);
-              res.send({ token: token });
-            });
-          });
-        });
-      } else {
-        // Step 3. Create a new user account or return an existing one.
-        User.findOne({ facebook: profile.id }, function(err, existingUser) {
-          if (existingUser) {
-            var token = createJWT(existingUser);
-            return res.send({ token: token });
-          }
-          var user = new User();
-          user.facebook = profile.id;
-          user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
-          user.username = profile.name;
-          user.save(function() {
-            var token = createJWT(user);
-            res.send({ token: token });
-          });
-        });
-      }
-    });
-  });
-});
-
-// Unlink provider
-app.post('/auth/unlink', ensureAuthenticated, function(req, res) {
-  var provider = req.body.provider;
-  var providers = ['facebook', 'google'];
-
-  if (providers.indexOf(provider) === -1) {
-    return res.status(400).send({ message: 'Unknown OAuth Provider' });
-  }
-
-  user.findById(req.user, function(err, user) {
-    if (!user) {
-      return res.status(400).send({ message: 'User Not Found' });
-    }
-    user[provider] = undefined;
-    user.save(function() {
-      res.status(200).end();
-    });
-  });
-});
 // index route
 app.get('/', function(req, res) {
   res.render('layouts/main.handlebars');

@@ -1,13 +1,6 @@
 angular.module('beatCoin')
-  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, $rootScope) {
-    // ngClickOverrideEnabled();
-    // $scope.edit = function() {
-    //   console.log("toggle");
-    //   if (edit) {
-    //     return false;
-    //   }
-    //   return true;
-    // };
+  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, $rootScope) {
+    $scope.card = {};
     $scope.getProfile = function() {
       Account.getProfile()
         .then(function(response) {
@@ -18,6 +11,7 @@ angular.module('beatCoin')
           toastr.error(response.data.message, response.status);
         });
     };
+
     $scope.updateProfile = function() {
       Account.updateProfile($scope.user)
         .then(function() {
@@ -27,26 +21,10 @@ angular.module('beatCoin')
           toastr.error(response.data.message, response.status);
         });
     };
-    $scope.link = function(provider) {
-      $auth.link(provider)
-        .then(function() {
-          toastr.success('You have successfully linked a ' + provider + ' account');
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          toastr.error(response.data.message, response.status);
-        });
-    };
-    $scope.unlink = function(provider) {
-      $auth.unlink(provider)
-        .then(function() {
-          toastr.info('You have unlinked a ' + provider + ' account');
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          toastr.error(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', response.status);
-        });
-    };
+
+    $scope.addCard = function() {
+      Card.addCard($rootScope.currentUser, $scope.card);
+    }
 
     $scope.getProfile();
   });

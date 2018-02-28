@@ -10,8 +10,9 @@ var database = require("../config");
 var CardSchema = mongoose.Schema({
   panCode: { type: String, required: true, unique: true },
   circuit: { type: String, required: true },
-  expDate: { type: Date, required: true },
-  securityNumb: { type: Number, required: true}
+  expDate: { type: String, required: true },
+  securityNumb: { type: Number, required: true},
+  balance: {type: Number, required: true}
 });
 
 var Card = module.exports = mongoose.model("Card", CardSchema);
