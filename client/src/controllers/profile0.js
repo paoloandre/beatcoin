@@ -1,5 +1,13 @@
 angular.module('beatCoin')
   .controller('ProfileCtrl', function($scope, $auth, toastr, Account, $rootScope) {
+    // ngClickOverrideEnabled();
+    // $scope.edit = function() {
+    //   console.log("toggle");
+    //   if (edit) {
+    //     return false;
+    //   }
+    //   return true;
+    // };
     $scope.getProfile = function() {
       Account.getProfile()
         .then(function(response) {

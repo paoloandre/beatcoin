@@ -1,25 +1,20 @@
 "use strict";
 
-var _mongoose = require("mongoose");
-var _mongoose2 = _interopRequireDefault(_mongoose);
-var _bcryptjs = require("bcryptjs");
-var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
-var _database = require("../config");
-var _database2 = _interopRequireDefault(_database);
+var mongoose = require("mongoose");
+var bcryptjs = require("bcryptjs");
+var database = require("../config");
 // var _CreditCardGenerator = require("../finance/CreditCardGenerator");
 // var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 //User schema
-var CardSchema = _mongoose2.default.Schema({
+var CardSchema = mongoose.Schema({
   panCode: { type: String, required: true, unique: true },
   circuit: { type: String, required: true },
   expDate: { type: Date, required: true },
   securityNumb: { type: Number, required: true}
 });
 
-var Card = module.exports = _mongoose2.default.model("Card", CardSchema);
+var Card = module.exports = mongoose.model("Card", CardSchema);
 
 //get user by id
 module.exports.getCardById = function (id, callback) {

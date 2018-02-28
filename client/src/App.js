@@ -2,6 +2,7 @@ angular.module('beatCoin', [
  // 'ngResource',
  // 'ngMessages',
  // 'ngAnimate',
+ 'ngTouch',
  'toastr',
  'ui.router',
  'satellizer'

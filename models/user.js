@@ -27,11 +27,6 @@ UserSchema.methods.comparePassword = function(password, hash, done) {
 
 var User = module.exports = mongoose.model("User", UserSchema);
 
-//get user by id
-// module.exports.findById = function (id, callback) {
-//   User.findById(id, callback);
-// };
-
 module.exports.getUserByUsername = function (username, callback) {
   var query = { username: username };
   User.findOne(query, callback);
