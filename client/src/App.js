@@ -70,6 +70,15 @@ $stateProvider
   }
 })
 
+.state('bank_transfer', {
+  url: '/bank_transfer',
+  templateUrl: '/static/src/partials/bank_transfer.html',
+  controller: 'BankTransferCtrl',
+  resolve: {
+    loginRequired: loginRequired
+  }
+})
+
 $urlRouterProvider.otherwise('/#!/');
 
 $interpolateProvider.startSymbol('{[{');

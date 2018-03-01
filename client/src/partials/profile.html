@@ -13,15 +13,16 @@
           <label class="control-label"><i class="glyphicon glyphicon-envelope"></i> E-mail</label>
           <input type="email" class="form-control" ng-model="user.email" />
         </div>
-        <button class="btn btn-lg btn-success">Update info</button>
+        <button role="send" class="btn btn-lg btn-success">Update info</button>
       </form>
     </div>
   </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">Account</div>
+    <div class="panel-body">
     <legend>Balance</legend>
-    <label ng-model="currentUser.balance"><i class="glyphicon glyphicon-euro"></i> {[{currentUser.balance}]}</label></br>
+    <label ng-model="currentUser.balance"><h3> {[{currentUser.balance}]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
     <legend>Cards</legend>
   <div class="table-responsive">
     <table class="table table-bordered">
@@ -45,7 +46,9 @@
     </tbody>
     </table>
   </div></br>
-    <button ng-click="add=!add">+</button>
+    <button role="add" ng-click="add=!add">Add Card</button>
+    </br>
+  </br>
     <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
       <div class="form-group">
         <label class="control-label">Pan Code</label>
@@ -67,7 +70,8 @@
         <label class="control-label">Balance</label>
         <input type="text" class="form-control" name="balance" ng-model="card.balance" />
       </div>
-      <button type="submit" class="btn btn-lg btn-success">Add Card</button>
+      <button role="send" type="submit" class="btn btn-lg btn-success">Add Card</button>
     </form>
+  </div>
   </div>
 </div>
