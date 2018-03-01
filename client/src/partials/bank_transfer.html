@@ -1,0 +1,41 @@
+  <!-- <div class="panel panel-default"> -->
+    <!-- <div class="panel-heading">Account</div> -->
+    <!-- <div class="panel-body"> -->
+    <legend>Balance</legend>
+    <label ng-model="currentUser.balance"><h3> {[{currentUser.balance}]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+    <div>Bank Transfer div</div>
+    <div class="container">
+      <div class="panel panel-default">
+        <div class="panel-heading">Choose a Card
+          <span role="pencil" class="glyphicon glyphicon-credit-card"></span></div>
+        <div class="panel-body">
+          <legend>Your Cards</legend>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>PAN Code</th>
+                <th>Circuit</th>
+                <th>Expire Date</th>
+                <th>Sec Number</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="card in cards">
+                <td>{[{card.panCode}]}</td>
+                <td>{[{card.circuit}]}</td>
+                <td>{[{card.expDate}]}</td>
+                <td>{[{card.securityNumb}]}</td>
+                <td>{[{card.balance}]}</td>
+                <td>
+                  <input type="radio" name="sel" ng-model="card.select"></input>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+          <button role="send" class="btn btn-lg btn-success">Send</button>
+        </div>
+      </div>
+    </div>
