@@ -23,6 +23,7 @@ var path = require('path'),
     config = require("./config.js"),
     User = require("./models/user"),
     Card = require("./models/card"),
+    Transaction = require("./models/transaction"),
     users = require("./routes/users");
 
 // function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -179,6 +180,45 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
   });
 });
 
+app.get('/api/banktransfer/:sender/:amount/:receiver/:description', ensureAuthenticated, function(req, res) {
+    var sender = req.params.sender;
+    var amount = req.params.amount;
+    var receiver = req.params.receiver;
+    var description = req.params.description;
+    Card.findOne({'panCode': receiver}, function(err, receiver){
+      if (!receiver) {
+        return res.status(400).send({ message: 'Receiver card not found' });
+      }
+      var transaction = new Transaction({
+          senderCard: sender,
+          receiverCard: receiver.panCode,
+          description: description,
+          transactionBalance: amount
+        });
+      // console.log(receiver);
+      Card.findOne({'panCode': sender}, function(err, sender) {
+        if (!sender) {
+          return res.status(400).send({ message: 'Something went wrong' });
+        }
+        // console.log(receiver);
+        receiver.balance = parseInt(receiver.balance) + parseInt(amount);
+        // console.log(receiver.balance);
+        // console.log(sender);
+        sender.balance = parseInt(sender.balance) - parseInt(amount);
+        console.log(transaction);
+        transaction.save(function(err){
+          receiver.save(function(err) {
+            sender.save(function(err) {
+              res.status(200).end();
+            });
+          });
+        });
+      });
+    });
+});
+
+
+
 //Login with email
 app.post('/auth/login', function(req, res) {
   User.findOne({ email: req.body.email }, 'password', function(err, user) {
@@ -216,7 +256,7 @@ app.post('/auth/signup', function(req, res) {
         name: req.body.fullname,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password,
+        password: req.body.password
       });
     User.addUser(user, function(err, result) {
       if (err) {

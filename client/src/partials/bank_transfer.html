@@ -1,9 +1,29 @@
   <!-- <div class="panel panel-default"> -->
     <!-- <div class="panel-heading">Account</div> -->
     <!-- <div class="panel-body"> -->
-    <legend>Balance</legend>
-    <label ng-model="currentUser.balance"><h3> {[{currentUser.balance}]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
-    <div>Bank Transfer div</div>
+    <div class="container">
+        <legend>Balance</legend>
+        <label ng-model="currentUser.balance"><h3> {[{currentUser.balance}]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+    </div>
+    </br>
+    <div class="container">
+        <legend>Transfer Amount</legend>
+        <input type="text" class="form-control" ng-model="amount" placeholder="Insert the amount"/>
+    </div>
+  </br>
+    <div class="container">
+        <legend>Receiver Card's PAN</legend>
+        <input type="text" class="form-control" ng-model="receiver" placeholder="Insert the reicever card's PAN code"/>
+    </div>
+  </br>
+  <div class="container">
+      <legend>Transaction Description</legend>
+      <textarea type="text"
+      class="form-control"
+      ng-model="description"
+      placeholder="Write a transaction description (optional)"/>
+  </div>
+</br>
     <div class="container">
       <div class="panel panel-default">
         <div class="panel-heading">Choose a Card
@@ -27,15 +47,18 @@
                 <td>{[{card.circuit}]}</td>
                 <td>{[{card.expDate}]}</td>
                 <td>{[{card.securityNumb}]}</td>
-                <td>{[{card.balance}]}</td>
+                <td>{[{card.balance}]} €</td>
                 <td>
-                  <input type="radio" name="sel" ng-model="card.select"></input>
+                  <!-- <button class="btn btn-primary" ng-click="bankTransfer($index)">Send</button> -->
+                  <md-button class="md-primary md-raised" ng-click="showConfirm($event)">
+                    Confirm Dialog
+                  </md-button>
                 </td>
               </tr>
             </tbody>
             </table>
           </div>
-          <button role="send" class="btn btn-lg btn-success">Send</button>
+          <!-- <button role="send" class="btn btn-lg btn-success" ng-click="bankTransfer()">Send</button> -->
         </div>
       </div>
     </div>

@@ -2,7 +2,8 @@ angular.module('beatCoin', [
   // 'chart.js',
   'ngMaterial',
   'ngMessages',
-  'toastr',
+  'material.svgAssetsCache',
+  'toastr',,
   'ui.router',
   'satellizer'
  ])

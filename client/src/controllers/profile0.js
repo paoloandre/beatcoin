@@ -1,5 +1,5 @@
 angular.module('beatCoin')
-  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, $rootScope) {
+  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, $rootScope, $state) {
 
     $scope.card = {};
 
@@ -37,7 +37,8 @@ angular.module('beatCoin')
     $scope.addCard = function() {
       Card.addCard($rootScope.currentUser, $scope.card)
       .then(function() {
-        toastr.success('Card Added');
+        toastr.success('Card added successfully','Card Added');
+        $state.reload();
       })
       .catch(function(response) {
         toastr.error(response.data.message, response.status);
