@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('client'));
 app.use(express.static('partials'));
-app.use(favicon('./client/src/favicon.ico'));
+// app.use(favicon('./client/src/favicon.ico'));
 
 //router
 
