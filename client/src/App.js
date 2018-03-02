@@ -25,7 +25,7 @@ var deferred = $q.defer();
 if ($auth.isAuthenticated()) {
   deferred.resolve();
   } else {
-    $location.path('/login');
+    $location.path('/#!/login');
   }
   return deferred.promise;
 }];
@@ -80,7 +80,7 @@ $stateProvider
   }
 })
 
-$urlRouterProvider.otherwise('/#!/');
+$urlRouterProvider.otherwise('/');
 
 $interpolateProvider.startSymbol('{[{');
 $interpolateProvider.endSymbol('}]}');
