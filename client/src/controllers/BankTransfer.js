@@ -1,22 +1,30 @@
 angular.module('beatCoin')
-  .controller('BankTransferCtrl', function($scope, $http, toastr, Card, Account, $rootScope, $state) {
-    
-    $scope.showConfirm = function(ev) {
-    // Appending dialog to document.body to cover sidenav in docs app
+  .controller('BankTransferCtrl', function($scope, $http, toastr, Card, Account, $rootScope, $state, $mdDialog) {
+
+    $scope.getBalance = function() {
+        var balance = 0;
+        for (var i = 0; i < $scope.cards.length; i++) {
+            var cardbal = $scope.cards[i].balance;
+            balance += cardbal;
+        }
+        $scope.balance = balance;
+    };
+
+    $scope.showConfirm = function(ev, index) {
     var confirm = $mdDialog.confirm()
-          .title('Would you like to delete your debt?')
-          .textContent('All of the banks have agreed to forgive you your debts.')
+          .title('Confirm transfer')
+          .textContent('Do You want to confirm the bank transfer with the selected card?')
           .ariaLabel('Lucky day')
           .targetEvent(ev)
-          .ok('Please do it!')
-          .cancel('Sounds like a scam');
+          .ok('Confirm')
+          .cancel('Cancel');
 
     $mdDialog.show(confirm).then(function() {
-      $scope.status = 'You decided to get rid of your debt.';
-    }, function() {
-      $scope.status = 'You decided to keep your debt.';
-    });
-  };
+          $scope.bankTransfer(index);
+        }, function() {
+          return;
+        });
+    };
 
     $scope.bankTransfer = function(index) {
       if ($scope.amount == 0 | $scope.amount == null) {
@@ -52,6 +60,7 @@ angular.module('beatCoin')
       Card.getCards()
         .then(function(response) {
           $scope.cards = response.data;
+          $scope.getBalance();
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
@@ -60,5 +69,4 @@ angular.module('beatCoin')
 
     $scope.getProfile();
     $scope.getCards();
-
   });

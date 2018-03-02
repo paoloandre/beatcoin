@@ -1,9 +1,6 @@
-  <!-- <div class="panel panel-default"> -->
-    <!-- <div class="panel-heading">Account</div> -->
-    <!-- <div class="panel-body"> -->
-    <div class="container">
+<div class="container">
         <legend>Balance</legend>
-        <label ng-model="currentUser.balance"><h3> {[{currentUser.balance}]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+        <label ng-model="balance"><h3> {[{ balance }]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
     </div>
     </br>
     <div class="container">
@@ -49,16 +46,14 @@
                 <td>{[{card.securityNumb}]}</td>
                 <td>{[{card.balance}]} €</td>
                 <td>
-                  <!-- <button class="btn btn-primary" ng-click="bankTransfer($index)">Send</button> -->
-                  <md-button class="md-primary md-raised" ng-click="showConfirm($event)">
-                    Confirm Dialog
-                  </md-button>
+                  <button class="btn btn-primary" ng-click="showConfirm($event, $index)">
+                    Send
+                  </button>
                 </td>
               </tr>
             </tbody>
             </table>
           </div>
-          <!-- <button role="send" class="btn btn-lg btn-success" ng-click="bankTransfer()">Send</button> -->
-        </div>
+          </div>
       </div>
     </div>
