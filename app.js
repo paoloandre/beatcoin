@@ -194,17 +194,12 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description', ensureAuthen
           description: description,
           transactionBalance: amount
         });
-      // console.log(receiver);
       Card.findOne({'panCode': sender}, function(err, sender) {
         if (!sender) {
           return res.status(400).send({ message: 'Something went wrong' });
         }
-        // console.log(receiver);
         receiver.balance = parseInt(receiver.balance) + parseInt(amount);
-        // console.log(receiver.balance);
-        // console.log(sender);
         sender.balance = parseInt(sender.balance) - parseInt(amount);
-        console.log(transaction);
         transaction.save(function(err){
           receiver.save(function(err) {
             sender.save(function(err) {
@@ -215,8 +210,6 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description', ensureAuthen
       });
     });
 });
-
-
 
 //Login with email
 app.post('/auth/login', function(req, res) {
