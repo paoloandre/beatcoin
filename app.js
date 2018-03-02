@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('client'));
 app.use(express.static('partials'));
-// app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon('/static/src/favicon.ico'));
 
 //router
 
@@ -73,7 +73,7 @@ var filename;
 
 //cors Options
 var corsOptions = {
-  // origin: 'https://unicam-product-viewer.herokuapp.com',
+  origin: 'https://pacific-badlands-65711.herokuapp.com/',
   optionsSuccessStatus: 200
 };
 
