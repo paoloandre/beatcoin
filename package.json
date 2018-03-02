@@ -1,11 +1,11 @@
 {
-  "name": "example-node-server",
+  "name": "BeatCoin",
   "version": "1.0.0",
   "description": "Online Banking",
-  "main": "api.js",
+  "main": "app.js",
   "scripts": {
-    "test": "nodemon api.js",
-    "start": "node api.js"
+    "test": "nodemon app.js",
+    "start": "node app.js"
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.15",
@@ -48,5 +48,8 @@
   "devDependencies": {
     "mocha": "^3.0.1",
     "nodemon": "^1.10.0"
+  },
+  "engines": {
+    "node": "6.9.5"
   }
 }
