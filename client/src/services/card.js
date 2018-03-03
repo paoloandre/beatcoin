@@ -17,6 +17,9 @@ angular.module('beatCoin')
       },
       bankTransfer: function(card, amount, receiver, description) {
         return $http.get('/api/banktransfer/' + card.panCode + '/' + amount + '/' + receiver + '/' + description);
+      },
+      removeCard: function(card) {
+        return $http.delete('/api/cards/' + card.panCode);
       }
     };
   });

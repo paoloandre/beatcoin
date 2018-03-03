@@ -42,6 +42,11 @@
         <td>{[{card.expDate}]}</td>
         <td>{[{card.securityNumb}]}</td>
         <td>{[{card.balance}]} €</td>
+        <td>
+          <md-button class="md-raised md-warn" ng-click="showConfirm($event, $index)">
+            Remove
+          </md-button>
+        </td>
       </tr>
     </tbody>
     </table>

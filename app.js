@@ -179,6 +179,16 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
   });
 });
 
+app.delete('/api/cards/:panCode', ensureAuthenticated, function(req, res) {
+  var panCode = req.params.panCode;
+  Card.remove({'panCode':panCode},function(err, result) {
+    if (!result) {
+      return res.status(400).send({ message: 'Card not found' });
+    }
+    return res.send(result);
+  });
+});
+
 app.get('/api/banktransfer/:sender/:amount/:receiver/:description', ensureAuthenticated, function(req, res) {
     var sender = req.params.sender;
     var amount = req.params.amount;
