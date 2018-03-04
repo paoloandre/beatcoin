@@ -8,6 +8,7 @@ angular.module('beatCoin')
             balance += cardbal;
         }
         $scope.balance = balance;
+        $rootScope.balance = balance;
     };
 
     $scope.showConfirm = function(ev, index) {
@@ -70,7 +71,7 @@ angular.module('beatCoin')
         toastr.error(response.data.message, response.status);
       });
     };
-    
+
     $scope.removeCard = function(index) {
       Card.removeCard($scope.cards[index])
       .then(function(response) {

@@ -1,5 +1,5 @@
 angular.module('beatCoin')
-  .controller('BankTransferCtrl', function($scope, $http, toastr, Card, Account, $rootScope, $state, $mdDialog) {
+  .controller('BankTransferCtrl', function($scope, $http, toastr, Card, Account, Finance, $rootScope, $state, $mdDialog) {
 
     $scope.getBalance = function() {
         var balance = 0;
@@ -35,7 +35,7 @@ angular.module('beatCoin')
         toastr.error("Insufficient funds on this card", "Error");
         return;
       }
-      Card.bankTransfer($scope.cards[index], $scope.amount, $scope.receiver, $scope.description)
+      Finance.bankTransfer($scope.cards[index], $scope.amount, $scope.receiver, $scope.description)
       .then(function(response) {
         toastr.success('Transfer correctly done', 'Bank Transfer');
         $state.reload();

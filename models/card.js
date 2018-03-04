@@ -3,8 +3,6 @@
 var mongoose = require("mongoose");
 var bcryptjs = require("bcryptjs");
 var database = require("../config");
-// var _CreditCardGenerator = require("../finance/CreditCardGenerator");
-// var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
 
 //User schema
 var CardSchema = mongoose.Schema({
@@ -18,7 +16,6 @@ var CardSchema = mongoose.Schema({
 
 var Card = module.exports = mongoose.model("Card", CardSchema);
 
-//get user by id
 module.exports.getCardById = function (id, callback) {
   Card.findById(id, callback);
 };

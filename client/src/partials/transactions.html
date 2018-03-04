@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading"><md-icon role="pencil" md-svg-src="static/src/img/transf.svg"></md-icon>Transactions</div>
+      <div class="panel-body">
+        <legend>Balance</legend>
+        <label ng-model="balance"><h3> {[{ balance }]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+        <legend>Your transactions</legend>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>Sender Card PAN</th>
+              <th>Receiver Card PAN</th>
+              <th>Description</th>
+              <th>Balance</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="transaction in transactions | orderBy:'-date'">
+              <td>{[{transaction.senderCard}]}</td>
+              <td>{[{transaction.receiverCard}]}</td>
+              <td>{[{transaction.description}]}</td>
+              <td>{[{transaction.transactionBalance}]} €</td>
+              <td>{[{transaction.date}]}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+  </div>
+</div>
