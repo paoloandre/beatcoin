@@ -16,7 +16,7 @@ angular.module('beatCoin')
         return $http.put('/api/cards', card);
       },
       removeCard: function(card) {
-        return $http.delete('/api/cards/' + card.panCode);
+        return $http.delete('/api/cards/' + card._id + '/' + card.panCode + '/' + card.balance);
       }
     };
   });

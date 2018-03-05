@@ -1,6 +1,16 @@
 angular.module('beatCoin')
-  .controller('TransactionsCtrl', function($scope, $http, toastr, Card, Finance, $rootScope, $state) {
+  .controller('TransactionsCtrl', function($scope, $http, toastr, Account, Card, Finance, $rootScope, $state) {
 
+    $scope.getBalance = function() {
+        Finance.getBalance()
+        .then(function(response) {
+          $scope.balance = response.data.balance;
+          $rootScope.balance = response.data.balance;
+        })
+        .catch(function(response) {
+          toastr.error(response.data.message, response.status);
+        });
+    };
 
     $scope.getTransactions = function() {
       var cards = [];
@@ -36,6 +46,19 @@ angular.module('beatCoin')
         $scope.transactions = transactions;
     };
 
+    $scope.getProfile = function() {
+      Account.getProfile()
+        .then(function(response) {
+          $scope.user = response.data;
+          $rootScope.currentUser = response.data;
+          $scope.getBalance();
+        })
+        .catch(function(response) {
+          toastr.error(response.data.message, response.status);
+        });
+    };
+
     $scope.balance = $rootScope.balance;
+    $scope.getProfile();
     $scope.getTransactions();
   });

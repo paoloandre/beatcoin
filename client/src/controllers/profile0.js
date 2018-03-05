@@ -1,14 +1,15 @@
 angular.module('beatCoin')
-  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, $rootScope, $state, $mdDialog) {
+  .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, Finance, $rootScope, $state, $mdDialog) {
 
     $scope.getBalance = function() {
-        var balance = 0;
-        for (var i = 0; i < $scope.cards.length; i++) {
-            var cardbal = $scope.cards[i].balance;
-            balance += cardbal;
-        }
-        $scope.balance = balance;
-        $rootScope.balance = balance;
+        Finance.getBalance()
+        .then(function(response) {
+          $scope.balance = response.data.balance;
+          $rootScope.balance = response.data.balance;
+        })
+        .catch(function(response) {
+          toastr.error(response.data.message, response.status);
+        });
     };
 
     $scope.showConfirm = function(ev, index) {
@@ -34,6 +35,7 @@ angular.module('beatCoin')
         .then(function(response) {
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
+          $scope.getBalance();
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
@@ -54,7 +56,6 @@ angular.module('beatCoin')
       Card.getCards()
         .then(function(response) {
           $scope.cards = response.data;
-          $scope.getBalance();
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);

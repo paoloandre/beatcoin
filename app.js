@@ -118,6 +118,16 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
   });
 });
 
+// GET user balance
+app.get('/api/balance', ensureAuthenticated, function(req, res) {
+  User.findOne({'_id': req.user}, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    res.send(user);
+  });
+});
+
 // GET retrieve user cards
 app.get('/api/cards', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
@@ -151,9 +161,7 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        // console.log(card._id);
         user.creditCard.push(card._id);
-        // console.log(user.creditCard);
         var balanceupdate = parseInt(user.balance);
         balanceupdate += parseInt(req.body.balance);
         user.balance = balanceupdate;
@@ -168,48 +176,85 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
 });
 
 // DELETE an user card
-app.delete('/api/cards/:panCode', ensureAuthenticated, function(req, res) {
-  var panCode = req.params.panCode;
-  Card.remove({'panCode':panCode},function(err, result) {
-    if (!result) {
-      return res.status(400).send({ message: 'Card not found' });
-    }
-    return res.send(result);
-  });
-});
-
-app.get('/api/banktransfer/:sender/:amount/:receiver/:description', ensureAuthenticated, function(req, res) {
-    var sender = req.params.sender;
-    var amount = req.params.amount;
-    var receiver = req.params.receiver;
-    var description = req.params.description;
-    Card.findOne({'panCode': receiver}, function(err, receiver){
-      if (!receiver) {
-        return res.status(400).send({ message: 'Receiver card not found' });
+app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, function(req, res) {
+    User.findById(req.user, function(err, user) {
+      if (!user) {
+        return res.status(400).send({ message: 'User not found' });
       }
-      var transaction = new Transaction({
-          senderCard: sender,
-          receiverCard: receiver.panCode,
-          description: description,
-          transactionBalance: amount
-        });
-      Card.findOne({'panCode': sender}, function(err, sender) {
-        if (!sender) {
-          return res.status(400).send({ message: 'Something went wrong' });
+
+      var panCode = req.params.panCode;
+      Card.remove({'panCode':panCode},function(err, result) {
+        if (!result) {
+          return res.status(400).send({ message: 'Card not found' });
         }
-        receiver.balance = parseInt(receiver.balance) + parseInt(amount);
-        sender.balance = parseInt(sender.balance) - parseInt(amount);
-        transaction.save(function(err){
-          receiver.save(function(err) {
-            sender.save(function(err) {
-              res.status(200).end();
-            });
-          });
+
+        user.creditCard.remove(req.params.idCard);
+        var balanceupdate = parseInt(user.balance);
+        balanceupdate = balanceupdate - parseInt(req.params.cardBalance);
+        user.balance = balanceupdate;
+
+        user.save(function(err) {
+          if (err) {
+            res.status(500).send({ message: err.message });
+          }
+          return res.send(result);
         });
       });
     });
 });
 
+// GET save bank transfer
+app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ensureAuthenticated, function(req, res) {
+  var senderCard = req.params.sender;
+  var amount = req.params.amount;
+  var receiverCard = req.params.receiver;
+  var description = req.params.description;
+  var accountBalance = req.params.balance;
+  Card.findOne({'panCode': receiverCard}, function(err, receiverCard){
+    if (!receiverCard) {
+      return res.status(400).send({ message: 'Receiver card not found' });
+    }
+    var transaction = new Transaction({
+      senderCard: senderCard,
+      receiverCard: receiverCard.panCode,
+      description: description,
+      transactionBalance: amount,
+      accountBalance: accountBalance
+    });
+    Card.findOne({'panCode': senderCard}, function(err, senderCard) {
+      if (!senderCard) {
+        return res.status(400).send({ message: 'Sender card not found' });
+      }
+      senderCard.balance = parseInt(senderCard.balance) - parseInt(amount);
+      receiverCard.balance = parseInt(receiverCard.balance) + parseInt(amount);
+      User.findById(req.user, function(err, senderUser) {
+        if  (!senderUser) {
+          return res.status(400).send({ message: 'Sender User not found'});
+        }
+        User.findById(receiverCard.owner, function(err, receiverUser) {
+          if (!receiverUser) {
+            return res.status(400).send({ message: 'Receiver User not found'});
+          }
+          senderUser.balance = parseInt(senderUser.balance) - parseInt(amount);
+          receiverUser.balance = parseInt(receiverUser.balance) + parseInt(amount);
+          transaction.save(function(err) {
+            receiverCard.save(function(err) {
+              senderCard.save(function(err) {
+                senderUser.save(function(err) {
+                  receiverUser.save(function(err) {
+                    res.status(200).end();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+});
+
+// GET retrieve transactions for an user card
 app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
   var card = req.params.card;
   Transaction.find( {$or: [{'senderCard': card}, {'receiverCard': card}]} )

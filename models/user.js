@@ -4,8 +4,6 @@ var mongoose = require("mongoose");
 var bcryptjs = require("bcryptjs");
 var database = require("../config");
 var card = require("../models/card");
-// var _CreditCardGenerator = require("../finance/CreditCardGenerator");
-// var _CreditCardGenerator2 = _interopRequireDefault(_CreditCardGenerator);
 
 //User schema
 var UserSchema = mongoose.Schema({
