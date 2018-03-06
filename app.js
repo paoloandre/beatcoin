@@ -149,31 +149,49 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
-
-    // NewCard solo se carta completamente nuova
-    var card = new Card({
-      panCode:  req.body.panCode,
-      circuit: req.body.circuit,
-      expDate: req.body.expDate,
-      securityNumb: req.body.securityNumb,
-      balance: req.body.balance,
-      owner: req.body.user
-    });
-    card.save(function(err) {
-        if (err) {
+    Card.findOne({"panCode": req.body.panCode}, function(err, existingCard) {
+      if (!existingCard) {
+        // NewCard solo se carta completamente nuova
+        var card = new Card({
+          panCode:  req.body.panCode,
+          circuit: req.body.circuit,
+          expDate: req.body.expDate,
+          securityNumb: req.body.securityNumb,
+          balance: req.body.balance,
+          owner: req.body.user
+        });
+        card.save(function(err) {
+          if (err) {
             res.status(500).send({ message: err.message });
+          }
+          user.creditCard.push(card._id);
+          var balanceupdate = parseInt(user.balance);
+          balanceupdate += parseInt(req.body.balance);
+          user.balance = balanceupdate;
+          user.save(function(err) {
+            if (err) {
+              res.status(500).send({ message: err.message });
+            }
+            res.status(200).end();
+          });
+        });
+      }
+      existingCard.visible = true;
+      user.balance = parseInt(user.balance) + parseInt(existingCard.balance);
+
+      existingCard.save(function(err) {
+        if (err) {
+          res.status(500).send({ message: err.message });
         }
-        user.creditCard.push(card._id);
-        var balanceupdate = parseInt(user.balance);
-        balanceupdate += parseInt(req.body.balance);
-        user.balance = balanceupdate;
         user.save(function(err) {
           if (err) {
-              res.status(500).send({ message: err.message });
+            res.status(500).send({ message: err.message });
           }
-            res.status(200).end();
+          res.status(200).end();
         });
       });
+
+    })
 
 
   });
@@ -207,7 +225,7 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
   });
 });
 
-// GET save bank transfer
+// GET save bank transfer TODO use post req instead get?
 app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ensureAuthenticated, function(req, res) {
   var senderCard = req.params.sender;
   var amount = req.params.amount;
@@ -217,6 +235,9 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
   Card.findOne({'panCode': receiverCard}, function(err, receiverCard){
     if (!receiverCard) {
       return res.status(400).send({ message: 'Receiver card not found' });
+    }
+    else if (receiverCard.visible != true) {
+      return res.status(400).send({ message: 'Cannot send money to this card'});
     }
     Card.findOne({'panCode': senderCard}, function(err, senderCard) {
       if (!senderCard) {
