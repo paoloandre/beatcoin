@@ -4,6 +4,18 @@
       <div class="panel-body">
         <legend>Balance</legend>
         <label ng-model="balance"><h3> {[{ balance }]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+        </br>
+        <legend>Balance History</legend>
+        <canvas id="line" class="chart chart-line" chart-data="data"
+        chart-labels="labels" chart-series="series" chart-options="options"
+        chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas>
+        <!-- <legend>Transactions History</legend> -->
+        <!-- <canvas id="line" class="chart chart-line" chart-data="data"
+        chart-labels="labels" chart-series="series" chart-options="options"
+        chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas> -->
+        </br>
         <legend>Your transactions</legend>
         <div class="table-responsive">
           <table class="table table-bordered">

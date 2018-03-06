@@ -1,5 +1,5 @@
 angular.module('beatCoin', [
-  // 'chart.js',
+  'chart.js',
   'ngMaterial',
   'ngMessages',
   // 'material.svgAssetsCache',

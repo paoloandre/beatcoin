@@ -256,6 +256,8 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
           receiverUser.balance = parseInt(receiverUser.balance) + parseInt(amount);
           senderUser.balanceHistory.push(senderUser.balance);
           receiverUser.balanceHistory.push(receiverUser.balance);
+          senderUser.dateHistory.push(Date());
+          receiverUser.dateHistory.push(Date());
           var transaction = new Transaction({
             senderCard: senderCard.panCode,
             receiverCard: receiverCard.panCode,
@@ -290,6 +292,18 @@ app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
         res.send(transaction);
       });
     };
+  });
+});
+
+app.get('/api/chartdata', ensureAuthenticated, function(req, res) {
+  User.findOne({'_id': req.user}, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'Cannot display chart data; User not found' });
+    }
+    else if (user.balanceHistory == []) {
+      return res.status(400).send({ message: 'No data to display in chart'});
+    }
+    res.send(user);
   });
 });
 

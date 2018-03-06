@@ -9,6 +9,9 @@ angular.module('beatCoin')
       },
       getTransactions: function(card) {
         return $http.get('/api/transactions/' + card);
+      },
+      getChartData: function() {
+        return $http.get('/api/chartdata');
       }
     };
   });

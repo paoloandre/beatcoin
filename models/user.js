@@ -14,6 +14,7 @@ var UserSchema = mongoose.Schema({
   creditCard: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Card'}],
   balance: { type: Number, default: 0, required: true },
   balanceHistory: [{type: String}],
+  dateHistory: [{type: Date}],
   erAdmin: { type: Boolean }
 });
 

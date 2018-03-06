@@ -1,6 +1,20 @@
 angular.module('beatCoin')
   .controller('TransactionsCtrl', function($scope, $http, toastr, Account, Card, Finance, $rootScope, $state) {
 
+    // var userCards = [];
+    // var transactions = [];
+
+    $scope.getChartData = function() {
+      Finance.getChartData()
+      .then(function(response) {
+        $scope.labels = response.data.dateHistory;
+        $scope.data = response.data.balanceHistory;
+      })
+      .catch(function(response) {
+        toastr.error(response.data.message, response.status);
+      });
+    };
+
     $scope.getBalance = function() {
         Finance.getBalance()
         .then(function(response) {
@@ -44,6 +58,8 @@ angular.module('beatCoin')
           toastr.error(response.data.message, response.status);
         });
         $scope.transactions = transactions;
+        // transactions = transactions;
+        // console.log($scope.transactions);
     };
 
     $scope.getProfile = function() {
@@ -52,13 +68,43 @@ angular.module('beatCoin')
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
           $scope.getBalance();
+          // userCards[0] = response.data.creditCard;
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);
         });
     };
 
+
     $scope.balance = $rootScope.balance;
     $scope.getProfile();
     $scope.getTransactions();
+    $scope.getChartData();
+
+    $scope.series = ['Series A', 'Series B'];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: 'y-axis-1',
+            type: 'linear',
+            display: true,
+            position: 'left'
+          },
+          {
+            id: 'y-axis-2',
+            type: 'linear',
+            display: true,
+            position: 'right'
+          }
+        ]
+      }
+    };
+
+    // console.log(userCards);
+    // console.log(transactions);
   });
