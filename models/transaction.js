@@ -10,7 +10,6 @@ var TransactionSchema = mongoose.Schema({
   receiverCard: { type: String, required: true },
   description: { type: String},
   transactionBalance: { type: Number, required: true },
-  accountBalance: { type: Number, required: true },
   date: { type: Date, default: Date.now }
 });
 
