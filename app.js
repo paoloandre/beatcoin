@@ -282,9 +282,14 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
 // GET retrieve transactions for an user card TODO user.findbyid
 app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
   var card = req.params.card;
-  Transaction.find( {$or: [{'senderCard': card}, {'receiverCard': card}]} )
-  .exec(function(err, transaction) {
-    res.send(transaction);
+  Card.findOne({'panCode': card})
+  .exec(function(err, cardres) {
+    if (cardres.owner == req.user) {
+      Transaction.find( {$or: [{'senderCard': card}, {'receiverCard': card}]} )
+      .exec(function(err, transaction) {
+        res.send(transaction);
+      });
+    };
   });
 });
 
