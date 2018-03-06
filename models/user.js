@@ -13,6 +13,7 @@ var UserSchema = mongoose.Schema({
   password: { type: String, required: true },
   creditCard: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Card'}],
   balance: { type: Number, default: 0, required: true },
+  balanceHistory: [{type: String}],
   erAdmin: { type: Boolean }
 });
 

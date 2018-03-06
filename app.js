@@ -225,13 +225,12 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
   });
 });
 
-// GET save bank transfer TODO use post req instead get?
+// GET save bank transfer TODO use post req instead of get?
 app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ensureAuthenticated, function(req, res) {
   var senderCard = req.params.sender;
   var amount = req.params.amount;
   var receiverCard = req.params.receiver;
   var description = req.params.description;
-  var balanceHistoryNew = req.params.balance;
   Card.findOne({'panCode': receiverCard}, function(err, receiverCard){
     if (!receiverCard) {
       return res.status(400).send({ message: 'Receiver card not found' });
@@ -255,6 +254,8 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
           }
           senderUser.balance = parseInt(senderUser.balance) - parseInt(amount);
           receiverUser.balance = parseInt(receiverUser.balance) + parseInt(amount);
+          senderUser.balanceHistory.push(senderUser.balance);
+          receiverUser.balanceHistory.push(receiverUser.balance);
           var transaction = new Transaction({
             senderCard: senderCard.panCode,
             receiverCard: receiverCard.panCode,
