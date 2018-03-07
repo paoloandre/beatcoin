@@ -7,37 +7,48 @@
         </br>
         <legend>Balance History</legend>
         <canvas id="line" class="chart chart-line" chart-data="data"
-        chart-labels="labels" chart-series="series" chart-options="options"
-        chart-dataset-override="datasetOverride" chart-click="onClick">
+        chart-labels="labels" chart-options="options"
+        chart-dataset-override="datasetOverride">
         </canvas>
-        <!-- <legend>Transactions History</legend> -->
-        <!-- <canvas id="line" class="chart chart-line" chart-data="data"
-        chart-labels="labels" chart-series="series" chart-options="options"
-        chart-dataset-override="datasetOverride" chart-click="onClick">
-        </canvas> -->
         </br>
         <legend>Your transactions</legend>
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>Sender Card PAN</th>
-              <th>Receiver Card PAN</th>
-              <th>Description</th>
-              <th>Balance</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="transaction in transactions | orderBy:'-date'">
-              <td>{[{transaction.senderCard}]}</td>
-              <td>{[{transaction.receiverCard}]}</td>
-              <td>{[{transaction.description}]}</td>
-              <td>{[{transaction.transactionBalance}]} €</td>
-              <td>{[{transaction.date}]}</td>
-            </tr>
-          </tbody>
-          </table>
-        </div>
+        <!-- <div id="transactions"> -->
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <div id="transactions">
+              <thead>
+                <tr>
+                  <th>Sender Card PAN</th>
+                  <th>Receiver Card PAN</th>
+                  <th>Description</th>
+                  <th>Balance</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="transaction in transactions | orderBy:'-date'">
+                  <td>{[{transaction.senderCard}]}</td>
+                  <td>{[{transaction.receiverCard}]}</td>
+                  <td>{[{transaction.description}]}</td>
+                  <td>{[{transaction.transactionBalance}]} €</td>
+                  <td>{[{transaction.date}]}</td>
+                </tr>
+              </tbody>
+            </div>
+            </table>
+          </div>
+        <!-- </div> -->
+        <md-button role="send"
+        title="Print the transactions report"
+        target="_blank"
+        aria-label="Print"
+        class="md-icon-button launch"
+        ng-click="printTransactions()"
+        >
+        <md-icon md-svg-icon="static/src/img/print.svg"></md-icon>
+      </md-button>
+      <!-- ng-print
+      print-element-id="transactions" -->
+        <!-- <md-button role="send" type="submit" class="md-raised md-primary"><i class="glyphicon glyphicon-envelope"></i>Update info</md-button> -->
   </div>
 </div>
