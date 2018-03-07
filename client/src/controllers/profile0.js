@@ -1,6 +1,8 @@
 angular.module('beatCoin')
   .controller('ProfileCtrl', function($scope, $auth, toastr, Account, Card, Finance, $rootScope, $state, $mdDialog) {
 
+    var currentUser = {};
+
     $scope.getBalance = function() {
         Finance.getBalance()
         .then(function(response) {
@@ -35,6 +37,7 @@ angular.module('beatCoin')
         .then(function(response) {
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
+          currentUser = response.data;
           $scope.getBalance();
         })
         .catch(function(response) {

@@ -1,6 +1,7 @@
 angular.module('beatCoin')
   .controller('BankTransferCtrl', function($scope, $http, toastr, Card, Account, Finance, $rootScope, $state, $mdDialog) {
 
+    var currentUser = {};
     $scope.getBalance = function() {
         Finance.getBalance()
         .then(function(response) {
@@ -52,6 +53,7 @@ angular.module('beatCoin')
         .then(function(response) {
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
+          currentUser = response.data;
           $scope.getBalance();
         })
         .catch(function(response) {

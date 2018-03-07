@@ -19,6 +19,7 @@ var path = require('path'),
     moment = require('moment'),
     url = require('url'),
     favicon = require('serve-favicon'),
+    nodemailer = require('nodemailer'),
     config = require("./config.js"),
     User = require("./models/user"),
     Card = require("./models/card"),
@@ -64,6 +65,15 @@ var corsOptions = {
   origin: 'https://pacific-badlands-65711.herokuapp.com/',
   optionsSuccessStatus: 200
 };
+
+//nodemailer options
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: config.MAIL_USER,
+    pass: config.MAIL_PASS
+  }
+});
 
 // 'Login Required' Middleware
 function ensureAuthenticated(req, res, next) {
@@ -172,6 +182,22 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
             if (err) {
               res.status(500).send({ message: err.message });
             }
+            console.log(user.email);
+            //nodemailer add_card mail
+            var addcardmail = {
+              from: config.MAIL_USER,
+              to: user.email,
+              subject: 'Beatcoin - New Card Added',
+              text: 'Notification - A new card has been added to your Account - Beatcoin'
+            };
+            transporter.sendMail(addcardmail, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+                return res.send(result);
+              }
+            });
             res.status(200).end();
           });
         });
@@ -187,13 +213,26 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
           if (err) {
             res.status(500).send({ message: err.message });
           }
+          console.log(user.email);
+          //nodemailer add_card mail
+          var addcardmail = {
+            from: config.MAIL_USER,
+            to: user.email,
+            subject: 'Beatcoin - Card Added Back',
+            text: 'Notification - A previously added card has been added back to your Account - Beatcoin'
+          };
+          transporter.sendMail(addcardmail, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.send(result);
+            }
+          });
           res.status(200).end();
         });
       });
-
     })
-
-
   });
 });
 
@@ -218,7 +257,22 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
           if (err) {
             res.status(500).send({ message: err.message });
           }
-          return res.send(result);
+          console.log(user.email);
+          //nodemailer remove_card mail
+          var removecardmail = {
+            from: config.MAIL_USER,
+            to: user.email,
+            subject: 'Beatcoin - Card Removed',
+            text: 'Notification - A card has been removed from your account - Beatcoin'
+          };
+          transporter.sendMail(removecardmail, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.send(result);
+            }
+          });
         });
       });
     });
@@ -269,6 +323,34 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
               senderCard.save(function(err) {
                 senderUser.save(function(err) {
                   receiverUser.save(function(err) {
+                    //nodemailer remove_card mail
+                    var banktransfermail = {
+                      from: config.MAIL_USER,
+                      to: senderUser.email,
+                      subject: 'Beatcoin - Transaction Successful',
+                      html: '<h3>Notification - The bank transfer requested is completed.</h3></br>' +
+                      '</br><b>Details:</b></br>'+
+                      'Transaction Balance: ' + amount +
+                      '</br>Sender PAN Card: ' + senderCard.panCode +
+                      '</br>Receiver PAN Card: ' + receiverCard.panCode +
+                      '</br>Description: ' + description +
+                      '</br>Date: ' + Date() +
+                      '</br></br>Beatoin'
+                      // text: 'Notification - The bank transfer requested is completed. - Details: - Transaction Balance:' + amount +
+                      // 'Sender PAN Card' + senderCard.panCode +
+                      // 'Receiver PAN Card' + receiverCard.panCode +
+                      // 'Description' + description +
+                      // 'Date' + Date() +
+                      // 'Beatcoin'
+                    };
+                    transporter.sendMail(banktransfermail, function(error, info){
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        console.log('Email sent: ' + info.response);
+                        return res.send(result);
+                      }
+                    });
                     res.status(200).end();
                   });
                 });
@@ -295,6 +377,7 @@ app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
   });
 });
 
+// GET retrieve user balanceHistory to display in chart
 app.get('/api/chartdata', ensureAuthenticated, function(req, res) {
   User.findOne({'_id': req.user}, function(err, user) {
     if (!user) {

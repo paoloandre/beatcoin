@@ -104,5 +104,4 @@ angular.module('beatCoin')
         ]
       }
     };
-
   });

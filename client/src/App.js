@@ -1,6 +1,5 @@
 angular.module('beatCoin', [
   'chart.js',
-  'ngPrint',
   'ngMaterial',
   'ngMessages',
   'toastr',
