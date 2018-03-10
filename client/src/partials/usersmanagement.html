@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Users</div>
+    <div class="panel-body">
+  <legend>Account Holders</legend>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Username</th>
+        <th>Balance</th>
+        <th>Enabled</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in users">
+        <td>{[{user.name}]}</td>
+        <td>{[{user.email}]}</td>
+        <td>{[{user.username}]}</td>
+        <td>{[{user.balance}]} €</td>
+        <td>{[{user.enabled}]}</td>
+        <td>
+          <md-button class=" md-warn" ng-click="disableUser($index)">
+            Disable / Enable
+          </md-button>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+  </div></br>
+</div>
+</div>
+</div>

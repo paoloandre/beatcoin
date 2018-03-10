@@ -15,7 +15,7 @@ var UserSchema = mongoose.Schema({
   balance: { type: Number, default: 0, required: true },
   balanceHistory: [{type: String}],
   dateHistory: [{type: Date}],
-  erAdmin: { type: Boolean }
+  enabled: { type: Boolean, default: true}
 });
 
 // Decrypting password to compare

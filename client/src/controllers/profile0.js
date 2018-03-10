@@ -65,6 +65,7 @@ angular.module('beatCoin')
         });
     };
 
+// TODO validate card data
     $scope.addCard = function() {
       Card.addCard($rootScope.currentUser, $scope.card)
       .then(function() {

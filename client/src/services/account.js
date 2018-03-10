@@ -6,6 +6,15 @@ angular.module('beatCoin')
       },
       updateProfile: function(profileData) {
         return $http.put('/api/me', profileData);
+      },
+      isAdmin: function() {
+        return $http.get('/api/administrator');
+      },
+      getUsers: function() {
+        return $http.get('/api/accountholders');
+      },
+      disableUser: function(user) {
+        return $http.get('/api/disableuser/' + user._id);
       }
     };
   });

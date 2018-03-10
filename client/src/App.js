@@ -29,6 +29,16 @@ if ($auth.isAuthenticated()) {
   return deferred.promise;
 }];
 
+// var adminRequired = ['$q', '$location', '$auth', function($q, $location, $auth, Account) {
+// var deferred = $q.defer();
+// if ($auth.isAuthenticated()) {
+//   deferred.resolve();
+//   } else {
+//     $location.path('/administrator');
+//   }
+//   return deferred.promise;
+// }];
+
 // App routes
 $stateProvider
 .state('home', {
@@ -86,6 +96,24 @@ $stateProvider
   resolve: {
     loginRequired: loginRequired
   }
+})
+
+.state('administrator', {
+  url: '/administrator',
+  templateUrl: '/static/src/partials/administrator.html',
+  controller: 'AdminCtrl'
+  // resolve: {
+  //   adminRequired: adminRequired,
+  // }
+})
+
+.state('usersmanagement', {
+  url: '/usersmanagement',
+  templateUrl: '/static/src/partials/usersmanagement.html',
+  controller: 'ManageCtrl'
+  // resolve: {
+  //   adminRequired: adminRequired,
+  // }
 })
 
 $urlRouterProvider.otherwise('/');

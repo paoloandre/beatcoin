@@ -107,6 +107,42 @@ function createJWT(user) {
   return jwt.encode(payload, config.TOKEN_SECRET);
 }
 
+// GET retrieve administrator user
+app.get('/api/administrator', function(req, res) {
+  console.log(req);
+  return True;
+  // User.findById(req.user, function(err, user) {
+  //   res.send(user);
+  // });
+});
+
+//GET account holders for Administrator
+app.get('/api/accountholders', function(req, res) {
+  User.find(function(err, users) {
+    if (err || !users) {
+      res.status(400).send({message: 'Error retrieving account holders'});
+    }
+    res.send(users);
+  });
+});
+
+//GET disable an account holder
+app.get('/api/disableuser/:id', function(req, res) {
+  // console.log(entered);
+  User.findOne({'_id': req.params.id}, function(err, user) {
+    if (err || !user) {
+      res.status(400).send({message: 'Error in changing user status'});
+    }
+    user.enabled = !user.enabled;
+    user.save(function(err) {
+      if (err) {
+        res.status(400).send({message: 'Error in saving user'});
+      }
+      return res.status(200).end();
+    });
+  });
+});
+
 // GET retrieve user
 app.get('/api/me', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
@@ -279,7 +315,7 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
   });
 });
 
-// GET save bank transfer TODO use post req instead of get?
+// GET save bank transfer
 app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ensureAuthenticated, function(req, res) {
   var senderCard = req.params.sender;
   var amount = req.params.amount;
@@ -329,19 +365,13 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
                       to: senderUser.email,
                       subject: 'Beatcoin - Transaction Successful',
                       html: '<h3>Notification - The bank transfer requested is completed.</h3></br>' +
-                      '</br><b>Details:</b></br>'+
-                      'Transaction Balance: ' + amount +
-                      '</br>Sender PAN Card: ' + senderCard.panCode +
-                      '</br>Receiver PAN Card: ' + receiverCard.panCode +
-                      '</br>Description: ' + description +
-                      '</br>Date: ' + Date() +
-                      '</br></br>Beatoin'
-                      // text: 'Notification - The bank transfer requested is completed. - Details: - Transaction Balance:' + amount +
-                      // 'Sender PAN Card' + senderCard.panCode +
-                      // 'Receiver PAN Card' + receiverCard.panCode +
-                      // 'Description' + description +
-                      // 'Date' + Date() +
-                      // 'Beatcoin'
+                      '</br><h5><b>Details:</b></h5></br>'+
+                      '<h5>Transaction Balance: ' + amount + '</h5></br>' +
+                      '<h5>Sender PAN Card: ' + senderCard.panCode + '</h5></br>' +
+                      '<h5>Receiver PAN Card: ' + receiverCard.panCode + '</h5></br>' +
+                      '<h5>Description: ' + description + '</h5></br>' +
+                      '<h5>Date: ' + Date() + '</h5></br></br>' +
+                      '<h4>- Beatcoin -</h4>'
                     };
                     transporter.sendMail(banktransfermail, function(error, info){
                       if (error) {
@@ -364,6 +394,7 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
 });
 
 // GET retrieve transactions for an user card TODO user.findbyid
+// TODO show sign + if the card is = to receiverCard, else -
 app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
   var card = req.params.card;
   Card.findOne({'panCode': card})
