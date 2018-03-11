@@ -1,7 +1,7 @@
 <div class="container">
   <div class="panel panel-default">
     <div role="profile" class="panel-heading" ng-click="edit=!edit" ng-init="edit=false">Profile
-      <span role="pencil" class="glyphicon glyphicon-pencil"></span></div>
+      <md-icon role="pencil" md-svg-icon="static/src/img/edit.svg"></md-icon></div>
     <div class="panel-body" ng-if="edit">
       <legend>Edit my profile</legend>
       <form method="post" ng-submit="updateProfile()">
@@ -43,7 +43,7 @@
         <td>{[{card.securityNumb}]}</td>
         <td>{[{card.balance}]} €</td>
         <td>
-          <md-button class="md-raised md-warn" ng-click="showConfirm($event, $index)">
+          <md-button class="md-warn" ng-click="showConfirm($event, $index)">
             Remove
           </md-button>
         </td>
@@ -70,6 +70,7 @@
         <input type="text" class="form-control" name="circuit" ng-model="card.circuit" />
       </div>
       <div class="form-group">
+        <!-- <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date" md-mode="month"></md-datepicker> -->
         <label class="control-label">Expire Date (MM/YY)</label>
         <input type="text" class="form-control" name="expDate" ng-model="card.expDate" />
       </div>

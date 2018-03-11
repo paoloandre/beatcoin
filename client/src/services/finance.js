@@ -12,6 +12,21 @@ angular.module('beatCoin')
       },
       getChartData: function() {
         return $http.get('/api/chartdata');
+      },
+      addPp: function(user, pp) {
+        var pp = {
+          "user": user._id,
+          "description": pp.description,
+          "amount": pp.amount,
+          "date": pp.date
+        };
+        return $http.put('/api/addpp/', pp);
+      },
+      getPp: function() {
+        return $http.get('/api/pps');
+      },
+      removePp: function(pp) {
+        return $http.delete('/api/pp/' + pp._id)
       }
     };
   });

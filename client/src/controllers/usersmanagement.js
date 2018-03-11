@@ -1,5 +1,15 @@
 angular.module('beatCoin')
-  .controller('ManageCtrl', function($scope, $auth, toastr, Account, $state) {
+  .controller('ManageCtrl', function($scope, $auth, toastr, Account, $state, $rootScope, $location) {
+    var admin = $rootScope.admin;
+
+    $scope.isAdmin = function() {
+      if (admin == undefined || admin == false) {
+        $location.path('/administrator');
+      }
+      else if (admin == true) {
+        return true;
+      };
+    };
 
     $scope.getUsers = function() {
       Account.getUsers()
@@ -22,5 +32,6 @@ angular.module('beatCoin')
       });
     };
 
+    $scope.isAdmin();
     $scope.getUsers();
 });

@@ -2,7 +2,6 @@
 
 var mongoose = require("mongoose");
 var database = require("../config");
-// var mongoosePaginate = require("mongoose-paginate");
 
 //Transaction schema
 var TransactionSchema = mongoose.Schema({
@@ -12,7 +11,5 @@ var TransactionSchema = mongoose.Schema({
   transactionBalance: { type: Number, required: true },
   date: { type: Date, default: Date.now }
 });
-
-// TransactionSchema.plugin(mongoosePaginate);
 
 var Transaction = module.exports = mongoose.model("Transaction", TransactionSchema);

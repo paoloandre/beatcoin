@@ -24,6 +24,7 @@ var path = require('path'),
     User = require("./models/user"),
     Card = require("./models/card"),
     Transaction = require("./models/transaction"),
+    Planned = require("./models/plannedpayment"),
     users = require("./routes/users");
 
 mongoose.Promise = require("bluebird");
@@ -107,7 +108,7 @@ function createJWT(user) {
   return jwt.encode(payload, config.TOKEN_SECRET);
 }
 
-// GET retrieve administrator user
+// TODO GET retrieve administrator user
 app.get('/api/administrator', function(req, res) {
   console.log(req);
   return True;
@@ -128,7 +129,6 @@ app.get('/api/accountholders', function(req, res) {
 
 //GET disable an account holder
 app.get('/api/disableuser/:id', function(req, res) {
-  // console.log(entered);
   User.findOne({'_id': req.params.id}, function(err, user) {
     if (err || !user) {
       res.status(400).send({message: 'Error in changing user status'});
@@ -195,6 +195,9 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
+    else if (user.enabled == false) {
+      return res.status(500).send({message: 'User disabled by admin'});
+    }
     Card.findOne({"panCode": req.body.panCode}, function(err, existingCard) {
       if (!existingCard) {
         // NewCard solo se carta completamente nuova
@@ -218,7 +221,6 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
             if (err) {
               res.status(500).send({ message: err.message });
             }
-            console.log(user.email);
             //nodemailer add_card mail
             var addcardmail = {
               from: config.MAIL_USER,
@@ -249,7 +251,6 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
           if (err) {
             res.status(500).send({ message: err.message });
           }
-          console.log(user.email);
           //nodemailer add_card mail
           var addcardmail = {
             from: config.MAIL_USER,
@@ -278,6 +279,9 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
     }
+    else if (user.enabled == false) {
+      return res.status(500).send({message: 'User disabled by admin'});
+    }
     var panCode = req.params.panCode;
     Card.findOne({'panCode':panCode},function(err, result) {
       if (!result) {
@@ -293,7 +297,6 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
           if (err) {
             res.status(500).send({ message: err.message });
           }
-          console.log(user.email);
           //nodemailer remove_card mail
           var removecardmail = {
             from: config.MAIL_USER,
@@ -337,6 +340,9 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
       User.findById(req.user, function(err, senderUser) {
         if  (!senderUser) {
           return res.status(400).send({ message: 'Sender User not found'});
+        }
+        else if (senderUser.enabled == false) {
+          return res.status(500).send({message: 'User disabled by admin'});
         }
         User.findById(receiverCard.owner, function(err, receiverUser) {
           if (!receiverUser) {
@@ -418,6 +424,100 @@ app.get('/api/chartdata', ensureAuthenticated, function(req, res) {
       return res.status(400).send({ message: 'No data to display in chart'});
     }
     res.send(user);
+  });
+});
+
+// PUT add a planned payment
+app.put('/api/addpp', ensureAuthenticated, function(req, res) {
+  User.findOne({'_id': req.body.user}, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    else if (user.enabled == false) {
+      return res.status(500).send({message: 'User disabled by admin'});
+    }
+    var planned = new Planned({
+      user: user._id,
+      description:  req.body.description,
+      amount: req.body.amount,
+      date: req.body.date
+    });
+    planned.save(function(err) {
+      if (err) {
+        res.status(500).send({ message: err.message });
+      }
+      else if (!err) {
+      //nodemailer add_card mail
+      var addplannedmail = {
+        from: config.MAIL_USER,
+        to: user.email,
+        subject: 'Beatcoin - New Planned Payment Added',
+        html: '<h3>Notification - A planned payment has been added.</h3></br>' +
+        '</br><h5><b>Details:</b></h5></br>'+
+        '<h5>Description: ' + planned.description  + '</h5></br>' +
+        '<h5>Amount: ' + planned.amount + '</h5></br>' +
+        '<h5>Date: ' + planned.date + '</h5></br></br>' +
+        '<h4>- Beatcoin -</h4>'
+      };
+      transporter.sendMail(addplannedmail, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          return res.send(result);
+        }
+      });
+      return res.status(200).end();
+    };
+    });
+  });
+});
+
+// DELETE a planned payment
+app.delete('/api/pp/:idPp', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    else if (user.enabled == false) {
+      return res.status(500).send({message: 'User disabled by admin'});
+    }
+    var id = req.params.idPp;
+    Planned.remove({'_id':id},function(err, result) {
+      if (err) {
+        return res.status(500).send({ message: err.message });
+      }
+          //nodemailer remove_card mail
+          var removeplannedmail = {
+            from: config.MAIL_USER,
+            to: user.email,
+            subject: 'Beatcoin - Planned Payment Removed',
+            text: 'Notification - A planned payment has been removed from your account - Beatcoin'
+          };
+          transporter.sendMail(removeplannedmail, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.send(result);
+            }
+          });
+        });
+      });
+    });
+
+// GET retrieve planned Payments
+app.get('/api/pps', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    Planned.find({'user': user._id}, function(err, pps) {
+      if (!pps) {
+        return res.status(400).send({ message: 'No planned payments found' });
+      }
+      res.send(pps);
+    });
   });
 });
 

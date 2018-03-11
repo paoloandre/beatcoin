@@ -31,7 +31,10 @@
     <li><a href="/#!/transactions">| Transactions</a></li>
   </ul>
   <ul ng-if="isAuthenticated()" class="nav navbar-nav">
-    <li><a href="/#!/bank_transfer">| Bank Transfer</a></li>
+    <li><a href="/#!/banktransfer">| Bank Transfer</a></li>
+  </ul>
+  <ul ng-if="isAuthenticated()" class="nav navbar-nav">
+    <li><a href="/#!/plannedpayments">| Planned Payments</a></li>
   </ul>
   <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
     <li><a href="/#!/logout">Logout</a></li>
@@ -75,6 +78,7 @@
     <script src="static/src/controllers/transactions.js"></script>
     <script src="static/src/controllers/administrator.js"></script>
     <script src="static/src/controllers/usersmanagement.js"></script>
+    <script src="static/src/controllers/plannedpayments.js"></script>
     <script src="static/src/services/account.js"></script>
     <script src="static/src/services/card.js"></script>
     <script src="static/src/services/finance.js"></script>
