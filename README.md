@@ -21,3 +21,15 @@ On the browser digit the following URL:
 BeatCoin is also deployed on Heroku at the following [link](https://pacific-badlands-65711.herokuapp.com/):
 
 https://pacific-badlands-65711.herokuapp.com/
+
+### User Stories
+1) come utente voglio poter accedere ad un'area privata tramite username e password
+2) come utente voglio poter leggere i miei movimenti bancari
+3) come utente voglio poter stampare un report dei miei movimenti bancari
+4) come utente voglio poter effettuare un bonifico
+5) come utente voglio poter avere un grafico che mi illustra in maniera sintetica la mia situazione in banca
+6) come utente voglio poter aggiungere/rimuovere una carta collegata al mio conto
+7) come utente voglio poter gestire i pagamenti periodici e le relative scadenze
+8) come utente voglio essere avvertito ogni qual volta viene effettuata una operazione sul mio conto
+9) come utente voglio sapere se il mio conto è stato bloccato
+10) come responsabile di filiale voglio poter bloccare il conto di uno dei miei correntisti

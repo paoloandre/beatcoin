@@ -6,3 +6,12 @@ font-family: 'Roboto', sans-serif;
 md-nav-bar md-nav-ink-bar {
   background: blue;
 }
+body {
+	margin: 0;
+}
+
+#over img {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
