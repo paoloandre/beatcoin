@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!-- <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
     <link rel="icon" href="static/src/favicon.ico" />
     <link href="static/src/stylesheets/styles.css" rel="stylesheet">
@@ -49,31 +48,6 @@
   </div>
 </br>
 
-  <!-- <div ng-controller="NavbarCtrl" class="navbar navbar-inverse navbar-static-top" style="background-color: #0099ff;">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="/#!/"><i class="ion-ios7-pulse-strong"></i>BeatCoin</a>
-  </div>
-  <ul class="nav navbar-nav">
-    <li ng-if="isAuthenticated()" ng-model="currentUser.name"><a href="/#!/profile">| {[{currentUser.name}]}</a></li>
-  </ul>
-  <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><a href="/#!/login">Login</a></li>
-    <li><a href="/#!/signup">Sign Up</a></li>
-  </ul>
-  <ul ng-if="isAuthenticated()" class="nav navbar-nav">
-    <li><a href="/#!/transactions">| Transactions</a></li>
-  </ul>
-  <ul ng-if="isAuthenticated()" class="nav navbar-nav">
-    <li><a href="/#!/banktransfer">| Bank Transfer</a></li>
-  </ul>
-  <ul ng-if="isAuthenticated()" class="nav navbar-nav">
-    <li><a href="/#!/plannedpayments">| Planned Payments</a></li>
-  </ul>
-  <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
-    <li><a href="/#!/logout">Logout</a></li>
-  </ul>
-</div> -->
-
 <div ui-view></div>
 
     <!-- external scripts -->
@@ -86,7 +60,6 @@
     <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
     <script src="https://code.angularjs.org/1.6.9/angular-touch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-charts/0.2.7/angular-charts.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
@@ -115,5 +88,6 @@
     <script src="static/src/services/account.js"></script>
     <script src="static/src/services/card.js"></script>
     <script src="static/src/services/finance.js"></script>
-  <!-- </body> -->
+    <script src="static/src/vendor/angular-credit-cards.js"></script>
+<!-- </body> -->
 </html>

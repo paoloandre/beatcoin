@@ -1,6 +1,5 @@
 angular.module('beatCoin')
   .controller('AdminCtrl', function($scope, $auth, toastr, $location, $state, $mdDialog, $rootScope) {
-    // TODO if user.enabled = false show its state of locked in red in navbar?
 
     $rootScope.status = '  ';
     $rootScope.admin = false;
@@ -12,7 +11,6 @@ angular.module('beatCoin')
       .textContent('Login as administrator')
       .placeholder('Password')
       .ariaLabel('arialabel')
-      // .initialValue('init')
       .targetEvent(ev)
       .required(true)
       .ok('Login')

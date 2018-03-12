@@ -2,10 +2,10 @@ angular.module('beatCoin', [
   'chart.js',
   'ngMaterial',
   'ngMessages',
-  // 'material.svgAssetsCache',
   'toastr',
   'ui.router',
-  'satellizer'
+  'satellizer',
+  'credit-cards'
  ])
 
 .config(function ($stateProvider, $urlRouterProvider, $interpolateProvider, $mdThemingProvider) {

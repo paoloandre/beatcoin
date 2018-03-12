@@ -31,7 +31,6 @@
         <th>PAN Code</th>
         <th>Circuit</th>
         <th>Expire Date</th>
-        <th>Security Number</th>
         <th>Balance</th>
       </tr>
     </thead>
@@ -40,7 +39,6 @@
         <td>{[{card.panCode}]}</td>
         <td>{[{card.circuit}]}</td>
         <td>{[{card.expDate}]}</td>
-        <td>{[{card.securityNumb}]}</td>
         <td>{[{card.balance}]} €</td>
         <td>
           <md-button class="md-warn" ng-click="showConfirm($event, $index)">
@@ -60,18 +58,24 @@
     </br>
   </br>
 
-  <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
+<div class="card-js"></div>
+  <form novalidate method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
     <div layout-gt-sm="row" class="container">
     <label>For previously inserted cards only Pan Code is required</label>
   </div>
     <div layout-gt-sm="row" class="container">
       <md-input-container class="md-block" flex-gt-sm="">
-        <label>PAN Code</label>
-        <input ng-model="card.panCode">
+        <label>Circuit</label>
+        <md-select ng-model="card.circuit">
+          <md-option value="Visa">Visa</md-option>
+          <md-option value="MasterCard">MasterCard</md-option>
+          <md-option value="American Express">American Express</md-option>
+          <md-option value="Other">Other</md-option>
+        </md-select>
       </md-input-container>
       <md-input-container class="md-block" flex-gt-sm="">
-        <label>Circuit</label>
-        <input ng-model="card.circuit">
+        <label>PAN Code</label>
+        <input type="text" ng-model="card.panCode" maxlength="16"/>
       </md-input-container>
     </div>
     <div layout-gt-sm="row" class="container">
@@ -89,32 +93,6 @@
     </div>
     <md-button role="send" class="md-raised md-primary" type="submit" ng-click="add=!add">Add Card</md-button>
   </form>
-
-    <!-- <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
-      <div class="form-group">
-        <label class="control-label">Pan Code</label>
-        <input type="text" class="form-control" name="panCode" ng-model="card.panCode" />
-      </div>
-      <label>For previously inserted cards only Pan Code is required</label></br></br>
-      <div class="form-group">
-        <label class="control-label">Circuit</label>
-        <input type="text" class="form-control" name="circuit" ng-model="card.circuit" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">Expire Date</label>
-        <md-datepicker name="expDate" ng-model="card.expDate" md-placeholder="Enter date" md-mode="month"></md-datepicker> -->
-        <!-- <input type="text" class="form-control" name="expDate" ng-model="card.expDate" /> -->
-      <!-- </div>
-      <div class="form-group">
-        <label class="control-label">Security Number</label>
-        <input type="text" class="form-control" name="securityNumb" ng-model="card.securityNumb" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">Balance</label>
-        <input type="text" class="form-control" name="balance" ng-model="card.balance" />
-      </div>
-      <md-button role="send" class="md-raised md-primary" type="submit" ng-click="add=!add">Add Card</md-button>
-    </form> -->
   </div>
   </div>
 </div>

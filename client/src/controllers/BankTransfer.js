@@ -54,6 +54,9 @@ angular.module('beatCoin')
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
           currentUser = response.data;
+          if (currentUser.enabled == false) {
+            toastr.error('User disabled by administrator');
+          }
           $scope.getBalance();
         })
         .catch(function(response) {

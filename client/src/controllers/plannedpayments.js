@@ -27,6 +27,9 @@ angular.module('beatCoin')
           $scope.user = response.data;
           $rootScope.currentUser = response.data;
           currentUser = response.data;
+          if (currentUser.enabled == false) {
+            toastr.error('User disabled by administrator');
+          }
         })
         .catch(function(response) {
           toastr.error(response.data.message, response.status);

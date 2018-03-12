@@ -49,7 +49,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/static', express.static('client'));
 app.use(express.static('partials'));
-// app.use(favicon('./client/src/favicon.ico'));
 
 // Force HTTPS on Heroku
 if (app.get('env') === 'production') {
@@ -107,15 +106,6 @@ function createJWT(user) {
   };
   return jwt.encode(payload, config.TOKEN_SECRET);
 }
-
-// TODO GET retrieve administrator user
-app.get('/api/administrator', function(req, res) {
-  console.log(req);
-  return True;
-  // User.findById(req.user, function(err, user) {
-  //   res.send(user);
-  // });
-});
 
 //GET account holders for Administrator
 app.get('/api/accountholders', function(req, res) {
@@ -191,12 +181,10 @@ app.get('/api/cards', ensureAuthenticated, function(req, res) {
 
 // PUT add an user card
 app.put('/api/cards', ensureAuthenticated, function(req, res) {
-  console.log(req.body.expDate);
   var exp = new Date(req.body.expDate);
   var month = exp.getMonth() + 1;
   var year = exp.getFullYear();
   var expf = month + '/' + year;
-  console.log(expf);
   User.findById(req.body.user, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
@@ -336,7 +324,6 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
   var minutes = today.getMinutes();
   var hours = today.getHours();
   var todayf = day + '/' + month + '/' + year + ' at ' + hours + ':' + minutes + ':' + seconds;
-  console.log(todayf);
 
   var senderCard = req.params.sender;
   var amount = req.params.amount;
@@ -418,8 +405,7 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
   });
 });
 
-// GET retrieve transactions for an user card TODO user.findbyid
-// TODO show sign + if the card is = to receiverCard, else -
+//GET retrieve transactions
 app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
   var card = req.params.card;
   Card.findOne({'panCode': card})
@@ -472,7 +458,7 @@ app.put('/api/addpp', ensureAuthenticated, function(req, res) {
         res.status(500).send({ message: err.message });
       }
       else if (!err) {
-      //nodemailer add_card mail
+      //nodemailer add_planned_payment mail
       var addplannedmail = {
         from: config.MAIL_USER,
         to: user.email,
