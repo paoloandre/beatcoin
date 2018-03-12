@@ -59,7 +59,38 @@
     </md-button>
     </br>
   </br>
-    <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
+
+  <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
+    <div layout-gt-sm="row" class="container">
+    <label>For previously inserted cards only Pan Code is required</label>
+  </div>
+    <div layout-gt-sm="row" class="container">
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>PAN Code</label>
+        <input ng-model="card.panCode">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Circuit</label>
+        <input ng-model="card.circuit">
+      </md-input-container>
+    </div>
+    <div layout-gt-sm="row" class="container">
+      <md-input-container class="md-block" flex-gt-sm="">
+        <md-datepicker name="expDate" ng-model="card.expDate" md-placeholder="Enter date" md-mode="month"></md-datepicker>
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Security Number</label>
+        <input ng-model="card.securityNumb">
+      </md-input-container>
+      <md-input-container class="md-block" flex-gt-sm="">
+        <label>Balance</label>
+        <input ng-model="card.balance">
+      </md-input-container>
+    </div>
+    <md-button role="send" class="md-raised md-primary" type="submit" ng-click="add=!add">Add Card</md-button>
+  </form>
+
+    <!-- <form method="post" ng-if="add" ng-init="add=false" ng-submit="addCard()">
       <div class="form-group">
         <label class="control-label">Pan Code</label>
         <input type="text" class="form-control" name="panCode" ng-model="card.panCode" />
@@ -70,10 +101,10 @@
         <input type="text" class="form-control" name="circuit" ng-model="card.circuit" />
       </div>
       <div class="form-group">
-        <!-- <md-datepicker ng-model="ctrl.myDate" md-placeholder="Enter date" md-mode="month"></md-datepicker> -->
-        <label class="control-label">Expire Date (MM/YY)</label>
-        <input type="text" class="form-control" name="expDate" ng-model="card.expDate" />
-      </div>
+        <label class="control-label">Expire Date</label>
+        <md-datepicker name="expDate" ng-model="card.expDate" md-placeholder="Enter date" md-mode="month"></md-datepicker> -->
+        <!-- <input type="text" class="form-control" name="expDate" ng-model="card.expDate" /> -->
+      <!-- </div>
       <div class="form-group">
         <label class="control-label">Security Number</label>
         <input type="text" class="form-control" name="securityNumb" ng-model="card.securityNumb" />
@@ -83,7 +114,7 @@
         <input type="text" class="form-control" name="balance" ng-model="card.balance" />
       </div>
       <md-button role="send" class="md-raised md-primary" type="submit" ng-click="add=!add">Add Card</md-button>
-    </form>
+    </form> -->
   </div>
   </div>
 </div>

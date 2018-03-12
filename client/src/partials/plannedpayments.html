@@ -1,22 +1,4 @@
 <div class="container">
-  <!-- <div class="panel panel-default">
-    <div role="profile" class="panel-heading" ng-click="edit=!edit" ng-init="edit=false">Planned Payments
-      <span role="pencil" class="glyphicon glyphicon-pencil"></span></div>
-    <div class="panel-body" ng-if="edit">
-      <legend>Edit my profile</legend>
-      <form method="post" ng-submit="updateProfile()">
-        <div class="form-group">
-          <label class="control-label"><i class="glyphicon glyphicon-user"></i> Name</label>
-          <input type="text" class="form-control" ng-model="user.name" />
-        </div>
-        <div class="form-group">
-          <label class="control-label"><i class="glyphicon glyphicon-envelope"></i> E-mail</label>
-          <input type="email" class="form-control" ng-model="user.email" />
-        </div>
-        <md-button role="send" type="submit" class="md-raised md-primary">Update info</md-button>
-      </form>
-    </div>
-  </div> -->
 
   <div class="panel panel-default">
     <div class="panel-heading">Planned Payments<md-icon role="pencil" md-svg-icon="static/src/img/plan.svg"></md-icon></div>
@@ -54,18 +36,18 @@
     </br>
   </br>
     <form method="post" ng-if="add" ng-init="add=false" ng-submit="addPp()">
-      <div class="form-group">
-        <label class="control-label">Description</label>
-        <input type="text" class="form-control" name="description" ng-model="pp.description" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">Amount</label>
-        <input type="text" class="form-control" name="amount" ng-model="pp.amount" />
+      <div layout-gt-sm="row" class="container">
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Description</label>
+          <input ng-model="pp.description">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm="">
+          <label>Amount</label>
+          <input ng-model="pp.amount">
+        </md-input-container>
       </div>
       <div class="form-group">
         <md-datepicker ng-model="pp.date" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
-        <!-- <label class="control-label">Date (DD/MM)</label>
-        <input type="text" class="form-control" name="date" ng-model="pp.date" /> -->
       </div>
       <md-button role="send" class="md-raised md-primary" type="submit" ng-click="add=!add">Add Planned Payment</md-button>
     </form>

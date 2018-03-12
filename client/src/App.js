@@ -2,12 +2,20 @@ angular.module('beatCoin', [
   'chart.js',
   'ngMaterial',
   'ngMessages',
+  // 'material.svgAssetsCache',
   'toastr',
   'ui.router',
   'satellizer'
  ])
 
-.config(function ($stateProvider, $urlRouterProvider, $interpolateProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $interpolateProvider, $mdThemingProvider) {
+
+  $mdThemingProvider.theme('docs-dark', 'default')
+          .primaryPalette('grey')
+          .warnPalette('red')
+          .accentPalette('blue')
+          .dark();
+
 // Helper auth function
 var skipIfLoggedIn = ['$q', '$auth', function($q, $auth) {
 var deferred = $q.defer();

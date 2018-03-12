@@ -9,7 +9,7 @@ var TransactionSchema = mongoose.Schema({
   receiverCard: { type: String, required: true },
   description: { type: String},
   transactionBalance: { type: Number, required: true },
-  date: { type: Date, default: Date.now }
+  date: { type: String, required: true }
 });
 
 var Transaction = module.exports = mongoose.model("Transaction", TransactionSchema);

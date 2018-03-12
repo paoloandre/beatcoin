@@ -1,27 +1,34 @@
 <div class="container">
-        <legend>Balance</legend>
-        <label ng-model="balance"><h3> {[{ balance }]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
-    </div>
-    </br>
-    <div class="container">
-        <legend>Transfer Amount</legend>
-        <input type="text" class="form-control" ng-model="amount" placeholder="Insert the amount"/>
-    </div>
-  </br>
-    <div class="container">
-        <legend>Receiver Card's PAN</legend>
-        <input type="text" class="form-control" ng-model="receiver" placeholder="Insert the reicever card's PAN code"/>
-    </div>
-  </br>
-  <div class="container">
-      <legend>Transaction Description</legend>
-      <textarea type="text"
-      class="form-control"
-      ng-model="description"
-      placeholder="Write a transaction description (Max 25 characters)"
-      maxlength="25"/>
+  <legend>Balance</legend>
+  <label ng-model="balance"><h3> {[{ balance }]} </h3></label> <i class="glyphicon glyphicon-euro"></i></br>
+</div>
+
+<div class="container">
+  <legend>Bank Transfer</legend>
+  <div layout-gt-sm="row" class="container">
+    <md-input-container class="md-block" flex-gt-sm="">
+      <label>Transfer Amount</label>
+      <input ng-model="amount">
+    </md-input-container>
   </div>
-</br>
+
+  <div layout-gt-sm="row" class="container">
+    <md-input-container class="md-block" flex-gt-sm="">
+      <label>Receiver Card's PAN</label>
+      <input ng-model="receiver">
+    </md-input-container>
+  </div>
+
+  <div layout-gt-sm="row" class="container">
+    <md-input-container class="md-block" flex-gt-sm="">
+      <label>Transaction Description</label>
+      <input type="text"
+      ng-model="description"
+      maxlength="25"/>
+    </md-input-container>
+  </div>
+</div>
+
     <div class="container">
       <div class="panel panel-default">
         <div class="panel-heading">Choose a Card

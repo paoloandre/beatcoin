@@ -6,17 +6,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>BeatCoin</title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.7/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
-    <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+    <!-- <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://npmcdn.com/angular-toastr/dist/angular-toastr.css" />
     <link rel="icon" href="static/src/favicon.ico" />
     <link href="static/src/stylesheets/styles.css" rel="stylesheet">
   </head>
 
 <body>
-  <div ng-controller="NavbarCtrl" class="navbar navbar-inverse navbar-static-top" style="background-color: #0099ff;">
+
+  <div ng-controller="NavbarCtrl" ng-cloak="" class="navBardemoBasicUsage" ng-app="beatCoin">
+    <md-content md-theme="docs-dark" class="md-padding">
+      <md-nav-bar md-no-ink-bar="disableInkBar" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+        <md-nav-item md-nav-href="/#!/" name="home">
+          BeatCoin
+        </md-nav-item>
+        <md-nav-item ng-if="isAuthenticated()" md-nav-href="/#!/profile" name="profile" ng-model="currentUser.name">
+          {[{currentUser.name}]}
+        </md-nav-item>
+        <md-nav-item ng-if="isAuthenticated()" md-nav-href="/#!/transactions" name="transactions">
+          Transactions
+        </md-nav-item>
+        <md-nav-item ng-if="isAuthenticated()" md-nav-href="/#!/banktransfer" name="banktransfer">
+          Bank Transfer
+        </md-nav-item>
+        <md-nav-item ng-if="isAuthenticated()" md-nav-href="/#!/plannedpayments" name="plannedpayments">
+          Planned Payments
+        </md-nav-item>
+        <md-nav-item ng-if="!isAuthenticated()" role="send" md-nav-href="/#!/login" name="login">
+          Login
+        </md-nav-item>
+        <md-nav-item ng-if="!isAuthenticated()" role="send" md-nav-href="/#!/signup" name="signup">
+          Sign Up
+        </md-nav-item>
+        <md-nav-item ng-if="isAuthenticated()" role="send" md-nav-href="/#!/logout" name="logout">
+          Logout
+        </md-nav-item>
+      </md-nav-bar>
+    </md-content>
+  </div>
+</br>
+
+  <!-- <div ng-controller="NavbarCtrl" class="navbar navbar-inverse navbar-static-top" style="background-color: #0099ff;">
   <div class="navbar-header">
     <a class="navbar-brand" href="/#!/"><i class="ion-ios7-pulse-strong"></i>BeatCoin</a>
   </div>
@@ -39,7 +72,7 @@
   <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
     <li><a href="/#!/logout">Logout</a></li>
   </ul>
-</div>
+</div> -->
 
 <div ui-view></div>
 

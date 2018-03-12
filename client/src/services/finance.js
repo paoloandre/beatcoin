@@ -27,6 +27,9 @@ angular.module('beatCoin')
       },
       removePp: function(pp) {
         return $http.delete('/api/pp/' + pp._id)
+      },
+      checkPlanned: function(email) {
+        return $http.get('/api/checkplanned/' + email);
       }
     };
   });

@@ -191,6 +191,12 @@ app.get('/api/cards', ensureAuthenticated, function(req, res) {
 
 // PUT add an user card
 app.put('/api/cards', ensureAuthenticated, function(req, res) {
+  console.log(req.body.expDate);
+  var exp = new Date(req.body.expDate);
+  var month = exp.getMonth() + 1;
+  var year = exp.getFullYear();
+  var expf = month + '/' + year;
+  console.log(expf);
   User.findById(req.body.user, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
@@ -200,11 +206,11 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
     }
     Card.findOne({"panCode": req.body.panCode}, function(err, existingCard) {
       if (!existingCard) {
-        // NewCard solo se carta completamente nuova
+        // NewCard only if completely new
         var card = new Card({
           panCode:  req.body.panCode,
           circuit: req.body.circuit,
-          expDate: req.body.expDate,
+          expDate: expf,
           securityNumb: req.body.securityNumb,
           balance: req.body.balance,
           owner: req.body.user
@@ -240,35 +246,37 @@ app.put('/api/cards', ensureAuthenticated, function(req, res) {
           });
         });
       }
-      existingCard.visible = true;
-      user.balance = parseInt(user.balance) + parseInt(existingCard.balance);
+      else if (existingCard) {
+        existingCard.visible = true;
+        user.balance = parseInt(user.balance) + parseInt(existingCard.balance);
 
-      existingCard.save(function(err) {
-        if (err) {
-          res.status(500).send({ message: err.message });
-        }
-        user.save(function(err) {
+        existingCard.save(function(err) {
           if (err) {
             res.status(500).send({ message: err.message });
           }
-          //nodemailer add_card mail
-          var addcardmail = {
-            from: config.MAIL_USER,
-            to: user.email,
-            subject: 'Beatcoin - Card Added Back',
-            text: 'Notification - A previously added card has been added back to your Account - Beatcoin'
-          };
-          transporter.sendMail(addcardmail, function(error, info){
-            if (error) {
-              console.log(error);
-            } else {
-              console.log('Email sent: ' + info.response);
-              return res.send(result);
+          user.save(function(err) {
+            if (err) {
+              res.status(500).send({ message: err.message });
             }
+            //nodemailer add_card mail
+            var addcardmail = {
+              from: config.MAIL_USER,
+              to: user.email,
+              subject: 'Beatcoin - Card Added Back',
+              text: 'Notification - A previously added card has been added back to your Account - Beatcoin'
+            };
+            transporter.sendMail(addcardmail, function(error, info){
+              if (error) {
+                console.log(error);
+              } else {
+                console.log('Email sent: ' + info.response);
+                return res.send(result);
+              }
+            });
+            res.status(200).end();
           });
-          res.status(200).end();
         });
-      });
+    };
     })
   });
 });
@@ -320,6 +328,16 @@ app.delete('/api/cards/:idCard/:panCode/:cardBalance', ensureAuthenticated, func
 
 // GET save bank transfer
 app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ensureAuthenticated, function(req, res) {
+  var today = new Date();
+  var month = today.getMonth() + 1;
+  var day = today.getDate();
+  var year = today.getFullYear();
+  var seconds = today.getSeconds();
+  var minutes = today.getMinutes();
+  var hours = today.getHours();
+  var todayf = day + '/' + month + '/' + year + ' at ' + hours + ':' + minutes + ':' + seconds;
+  console.log(todayf);
+
   var senderCard = req.params.sender;
   var amount = req.params.amount;
   var receiverCard = req.params.receiver;
@@ -352,13 +370,14 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
           receiverUser.balance = parseInt(receiverUser.balance) + parseInt(amount);
           senderUser.balanceHistory.push(senderUser.balance);
           receiverUser.balanceHistory.push(receiverUser.balance);
-          senderUser.dateHistory.push(Date());
-          receiverUser.dateHistory.push(Date());
+          senderUser.dateHistory.push(todayf);
+          receiverUser.dateHistory.push(todayf);
           var transaction = new Transaction({
             senderCard: senderCard.panCode,
             receiverCard: receiverCard.panCode,
             description: description,
-            transactionBalance: amount
+            transactionBalance: amount,
+            date: todayf
           });
           transaction.save(function(err) {
             receiverCard.save(function(err) {
@@ -376,7 +395,7 @@ app.get('/api/banktransfer/:sender/:amount/:receiver/:description/:balance', ens
                       '<h5>Sender PAN Card: ' + senderCard.panCode + '</h5></br>' +
                       '<h5>Receiver PAN Card: ' + receiverCard.panCode + '</h5></br>' +
                       '<h5>Description: ' + description + '</h5></br>' +
-                      '<h5>Date: ' + Date() + '</h5></br></br>' +
+                      '<h5>Date: ' + todayf + '</h5></br></br>' +
                       '<h4>- Beatcoin -</h4>'
                     };
                     transporter.sendMail(banktransfermail, function(error, info){
@@ -429,6 +448,11 @@ app.get('/api/chartdata', ensureAuthenticated, function(req, res) {
 
 // PUT add a planned payment
 app.put('/api/addpp', ensureAuthenticated, function(req, res) {
+  var date = new Date(req.body.date);
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var year = date.getFullYear();
+  var datef = day + '/' + month + '/' + year;
   User.findOne({'_id': req.body.user}, function(err, user) {
     if (!user) {
       return res.status(400).send({ message: 'User not found' });
@@ -436,11 +460,12 @@ app.put('/api/addpp', ensureAuthenticated, function(req, res) {
     else if (user.enabled == false) {
       return res.status(500).send({message: 'User disabled by admin'});
     }
+
     var planned = new Planned({
       user: user._id,
       description:  req.body.description,
       amount: req.body.amount,
-      date: req.body.date
+      date: datef
     });
     planned.save(function(err) {
       if (err) {
@@ -499,9 +524,9 @@ app.delete('/api/pp/:idPp', ensureAuthenticated, function(req, res) {
               console.log(error);
             } else {
               console.log('Email sent: ' + info.response);
-              return res.send(result);
             }
           });
+          return res.send(result);
         });
       });
     });
@@ -517,6 +542,47 @@ app.get('/api/pps', ensureAuthenticated, function(req, res) {
         return res.status(400).send({ message: 'No planned payments found' });
       }
       res.send(pps);
+    });
+  });
+});
+
+// GET Check for planned Payments
+app.get('/api/checkplanned/:email', function(req, res) {
+  User.findOne({'email': req.params.email}, function(err, user) {
+    if (err || !user) {
+      res.status(401).send({message: 'User not found'});
+    }
+    Planned.find({'user': user._id}, function(err, planned) {
+      var today = new Date();
+      var month = today.getMonth() + 1;
+      var day = today.getDate();
+      var year = today.getFullYear();
+      var todayf = day + '/' + month + '/' + year;
+      var i = 0;
+      for (i = 0; i < planned.length; i++) {
+        if (planned[i].date == todayf) {
+          //nodemailer planned payment mail
+          var plannedmail = {
+            from: config.MAIL_USER,
+            to: user.email,
+            subject: 'Beatcoin - Planned Payment Expiring',
+            html: '<h3>Notification - A planned payment expires today!</h3></br>' +
+            '</br><h5><b>Details:</b></h5></br>'+
+            '<h5>Description: ' + planned[i].description  + '</h5></br>' +
+            '<h5>Amount: ' + planned[i].amount + '</h5></br>' +
+            '<h5>Date: ' + planned[i].date + '</h5></br></br>' +
+            '<h4>- Beatcoin -</h4>'
+          };
+          transporter.sendMail(plannedmail, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+        }
+      };
+      res.send();
     });
   });
 });

@@ -2,3 +2,7 @@
 [role=pencil]{float: right}
 [role=send]{float: right}
 [role=add]{align: center}
+font-family: 'Roboto', sans-serif;
+md-nav-bar md-nav-ink-bar {
+  background: blue;
+}
