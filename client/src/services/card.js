@@ -20,6 +20,9 @@ angular.module('beatCoin')
       getCards: function() {
         return $http.get('/api/cards');
       },
+      getAllCards: function() {
+        return $http.get('/api/allcards');
+      },
       addCard: function(user, card) {
         card.panCode = cc_format(card.panCode);
         var card = {

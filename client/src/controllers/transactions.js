@@ -31,7 +31,7 @@ angular.module('beatCoin')
       var n = 0;
       var r = 0;
       var rc = 0;
-      Card.getCards()
+      Card.getAllCards()
         .then(function(response) {
           for (i = 0; i < response.data.length; i++) {
             cards[i] = response.data[i].panCode;

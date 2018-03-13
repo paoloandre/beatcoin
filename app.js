@@ -179,6 +179,22 @@ app.get('/api/cards', ensureAuthenticated, function(req, res) {
   });
 });
 
+//GET retrieve all cards
+app.get('/api/allcards', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+    Card.find({'owner': user._id}, function(err, cards) {
+      if (!cards) {
+        return res.status(400).send({ message: 'No cards found' });
+      }
+      res.send(cards);
+    });
+  });
+});
+
+
 // PUT add an user card
 app.put('/api/cards', ensureAuthenticated, function(req, res) {
   var exp = new Date(req.body.expDate);
@@ -413,6 +429,7 @@ app.get('/api/transactions/:card', ensureAuthenticated, function(req, res) {
     if (cardres.owner == req.user) {
       Transaction.find( {$or: [{'senderCard': card}, {'receiverCard': card}]} )
       .exec(function(err, transaction) {
+        console.log(transaction);
         res.send(transaction);
       });
     };
