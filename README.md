@@ -6,6 +6,10 @@ UNICAM Programmazione Web [Corso](http://didattica.cs.unicam.it/doku.php?id=dida
 
 Realized by: Paolo Andreassi - matr. 090629
 
+### Presentation Video
+
+[Beatcoin - Online Banking - YouTube](https://youtu.be/6tTWN2gNSqo)
+
 ### Local Usage
 After have [cloned](https://github.com/paoloandre/beatcoin.git) or [downloaded](https://github.com/paoloandre/beatcoin/archive/master.zip) the repository, navigate to root folder using command prompt and then execute the following commands:
 
