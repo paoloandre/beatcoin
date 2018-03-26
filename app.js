@@ -24,8 +24,7 @@ var path = require('path'),
     User = require("./models/user"),
     Card = require("./models/card"),
     Transaction = require("./models/transaction"),
-    Planned = require("./models/plannedpayment"),
-    users = require("./routes/users");
+    Planned = require("./models/plannedpayment");
 
 mongoose.Promise = require("bluebird");
 
