@@ -6,6 +6,14 @@ UNICAM Programmazione Web [Corso](http://didattica.cs.unicam.it/doku.php?id=dida
 
 Realized by: Paolo Andreassi - matr. 090629
 
+### Presentation Video
+
+[Beatcoin - Online Banking - YouTube](https://youtu.be/6tTWN2gNSqo)
+
+Testing credentials for secondary account:
+User: pablo1594@hotmail.it
+Pass: asd123
+
 ### Local Usage
 After have [cloned](https://github.com/paoloandre/beatcoin.git) or [downloaded](https://github.com/paoloandre/beatcoin/archive/master.zip) the repository, navigate to root folder using command prompt and then execute the following commands:
 
@@ -23,6 +31,8 @@ On the browser digit the following URL:
 BeatCoin is also deployed on Heroku at the following [link](https://pacific-badlands-65711.herokuapp.com/):
 
 https://pacific-badlands-65711.herokuapp.com/
+
+(Local testing is suggested if possible)
 
 ### User Stories
 1) come utente voglio poter accedere ad un'area privata tramite username e password
